@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 文档搜索</title>
+    <link rel="stylesheet" href="index.css">
+
+    <!-- 直接引入jQuery源码的网络路径 -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- 搜索框 + 搜索按钮 -->
+        <div class="header">
+            <input type="text" id="query">
+            <button id="search">搜索</button>
+        </div>
+
+        <!-- 搜索结果显示 -->
+        <div class="result">
+
+        </div>
+    </div>
+
+
+
+    <script>
+        let button = document.querySelector("#search");
+        let result = document.querySelector(".result");
+
+        button.onclick = function() {
+
+            // 获取到输入的内容
+            let input = document.querySelector("#query");
+            let query = input.value;
+            console.log(query);
+
+            // 构造一个ajax请求发送给服务器
+            jQuery.ajax({
+                type: "GET",
+                url: "search?query=" + query,
+                success: function(data, status){
+                    // 回调函数，当ajax请求成功返回时调用
+                    // data是返回的结果数据
+                    // status是状态码
+                    console.log(data);
+
+                    // 将返回的数据构造成界面内容
+                    buildResult(data);
+                }
+            });
+        }
+
+        function buildResult(data){
+            // 遍历 data 中的每一个元素（每一条搜索结果）
+            // item 就是 data 中的每一个元素
+
+            // 清空上次结果
+            result.innerHTML = '';
+
+            // 展示搜索结果的个数
+            let conuntDiv = document.createElement('div');
+            conuntDiv.className = 'count';
+            conuntDiv.innerHTML = '当前搜索结果有' + data.length + '个';
+            result.appendChild(conuntDiv);
+
+            
+            for (let item of data) {
+                
+                // 设置一条搜索结果的标签
+                let itemDiv = document.createElement('div');
+                itemDiv.className = 'item';
+
+                // 构造标题
+                let title = document.createElement('a');
+                title.href = item.url;
+                title.innerHTML = item.title;
+                /* 点击后生成新的界面 */
+                title.target = "_blank";
+                itemDiv.appendChild(title);
+
+                // 构造描述
+                let desc = document.createElement('div');
+                desc.className = 'desc';
+                desc.innerHTML = item.desc;
+                itemDiv.appendChild(desc);
+
+                // 构造url
+                let url = document.createElement('div');
+                url.className = 'url';
+                url.innerHTML = item.url;
+                itemDiv.appendChild(url);
+
+                result.appendChild(itemDiv);
+            }
+        }
+    </script>
+</body>
+</html>

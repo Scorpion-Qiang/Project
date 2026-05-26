@@ -1,0 +1,105 @@
+/* 去除浏览器默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+
+    /* 给整体的页面设置一个高度（与浏览器窗口一样大）*/
+    height: 100%;
+    /* 设置背景图 */
+    background-image: url(image/青岛.jpg);
+    /* 设置背景图不平铺 */
+    background-repeat: no-repeat;
+    /* 设置背景图位置 */
+    background-position: center center;
+    /* 设置背景图大小 */
+    background-size: cover;
+    
+}
+
+.container {
+    /* 设置宽度 */
+    width: 60%;
+    /* 设置高度 */
+    height: 100%;
+    /* 位置居中 */
+    margin: 0 auto;
+    /* 背景色 */
+    background-color: rgba(255,255,255,0.6);
+    /* 圆角矩形 */
+    border-radius: 8px;
+    /* 设置内边距，避免文字紧贴边框 */
+    padding: 25px; 
+
+    /* 超出元素的部分，自动生成滚动条 */
+    overflow: auto;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+}
+
+.header input {
+    width: 87%;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    padding-left: 10px;
+    border-radius: 8px;
+    border: none;
+    
+}
+
+.header #search {
+    width: 12%;
+    height: 40px;
+    background-color: rgb(97, 97, 224);
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+
+    /* 去边框 */
+    border: none;
+}
+
+.header #search:active {
+    background-color: gray;
+}
+
+.count {
+    color: gray;
+    margin-top: 10px;
+    font-size: 10px;
+}
+
+.item {
+    width: 100%;
+    padding: 10px 0;
+}
+
+.item a {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgb(42, 107, 205);
+}
+
+.item .desc {
+    padding-top: 5px;
+    font-size: 15px;
+}
+
+.item .url {
+    padding-top: 3px;
+    font-size: 15px;
+    color: rgb(0,125,0);
+}
+
+/* 实现标红逻辑 */
+.item .desc i {
+    color: crimson;
+    font-style: normal;
+}

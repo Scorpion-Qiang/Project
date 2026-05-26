@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 在下面修改 -->
+    <title></title>
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+
+    <link rel = "stylesheet" href = "./css/settlementDetail.css">
+
+    <link rel="stylesheet" href="./editor2.md/css/editormd.min.css">
+
+    <!-- 引入JQuery-->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
+    <!-- 注意这个位置，好烦啊 -->
+    <!--editormd -->
+    <script src="editor2.md/lib/marked.min.js"></script>
+    <script src="editor2.md/lib/prettify.min.js"></script>
+    <script src="editor2.md/editormd.js"></script>
+
+    <!-- 代码框插件 -->
+    <script src="editor2.md/plugins/code-block-dialog/code-block-dialog.js"></script>
+    <!-- 表情插件 -->
+    <script src="editor2.md/plugins/emoji-dialog/emoji-dialog.js"></script>
+    <!-- 链接插件 -->
+    <script src="editor2.md/plugins/link-dialog/link-dialog.js"></script>
+
+
+</head>
+<body>
+    <div class="nav">
+        <img alt="头像" src="./image/图标.jpg">
+        <span class="title">Online Judge</span>
+        <span class="spacer"></span>
+        <a href="userDetail.html">个人主页</a>
+        <a href="problemlist.html">题库</a>
+        <a href="reviewlist.html">讨论</a>
+    </div>
+
+    <div class="container">
+        <div class="settle-detail">
+            <div class="settle-detail-first">
+                <a href="#" id="settle-detail-a">
+                    <img src="#" class="settle-detail-myphoto">
+                </a>
+                
+                <div class="settle-detail-title"></div>
+            </div>
+            <div class="settle-detail-time"></div>
+            <!-- 这个style一定要加，统一背景色的秘密在里 -->
+            <div id="settle-detail-content"style="background-color: transparent;font-size: 16px; padding-left: 0px">
+            </div>              
+        </div>
+
+        
+        <div class="review" style="display: block">
+            <div class="review-head">
+                <div class="count">
+                    <span id="count"></span> 
+                    <span>条评论...</span>
+                </div>
+                <div class="addreview">
+                     <!-- 它的样式根本不用设置，设置了也没用  -->
+                    <div id="first-write-one">
+                        <textarea style="display:none;"></textarea>
+                    </div>
+                    <div id="first-write-two" style="display: none;">
+                        <textarea style="display:none;"></textarea>
+                    </div>
+
+                    <div>
+                        <a href="#" class="writing"onclick="getWrite('first')">编辑</a>
+                        <a href="#" class="read"onclick="preRead('first')">预览</a>
+                        <a href="#" class="submitreview"onclick="submitreview()">提交</a>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="review-list">
+                <!-- <div class="review-list-one">
+                    <div class="review-first">
+                        <div class="review-front">
+                            <img src="./image/图标.jpg" class="review-myphoto">
+                            <span class="review-username">这份学习笔记从</span>
+                        </div>
+                        
+                        <div class="review-time">2022-10-4-20:58</div>
+                    </div>
+
+                    <div class="review-content" id="1-review-content">
+                        <textarea style="display: none;"></textarea>
+                    </div>
+
+                    <a href="#" class="enlarge">展开评论</a>
+                    <a href="#" class="answer">回复</a>
+
+                    <div class="addreview-two" style="display: none;" id="1-addreview">
+                        <div id="1-write-one" style="display: block;">
+                            <textarea style="display:none;"></textarea>
+                        </div>
+                        <div id="1-write-two" style="display: none;">
+                            <textarea style="display: none;"></textarea>
+                        </div>
+                        <div>
+                            <a href="#" class="writing"onclick="get_write(1)">编辑</a>
+                            <a href="#" class="read"onclick="pre_read(1)">预览</a>
+                            <a href="#"class="submitreview"onclick="submitreview(1, 1)">提交</a>
+                        </div>
+                    </div>
+
+                    <div class="review-answer-list">
+                        <div class="review-answer-one" id="2-answer">
+                            <div class="review-first">
+                                <div class="review-front">
+                                    <img src="./image/图标.jpg" class="review-myphoto">
+                                    <span class="review-username">这份学习笔记从</span>
+                                    <span class="review-symbol">></span>
+                                    <span class="review-sendto">我爱你</span>
+                                </div>
+                                <div class="review-time">2022-10-4-20:58</div>
+                            </div>
+                            <div class="review-describe" id="2-review-describe">
+                                <textarea style="display: none;"></textarea>
+                            </div>
+                            <a href="#" class="review-new-answer">回复</a>
+                        </div>
+
+                        <div class="addreview-two" style="display: block;" id="2-addreview">
+                            <div id="2-write-one" style="display: block;">
+                                <textarea style="display:none;"></textarea>
+                            </div>
+                            <div id="2-write-two" style="display: none;">
+                                <textarea style="display: none;"></textarea>
+                            </div>
+                            <div>
+                                <a href="#" class="writing"onclick="get_write(2)">编辑</a>
+                                <a href="#" class="read"onclick="pre_read(2)">预览</a>
+                                <a href="#"class="submitreview"onclick="submitreview(1,2)">提交</a>
+                            </div>
+                        </div>
+
+
+                        <div class="review-answer-one">
+                            <div class="review-first">
+                                <div class="review-front">
+                                    <a href='#'>
+                                        <img src="./image/图标.jpg" class="review-myphoto">
+                                    </a>
+                                    <span class="review-username">这份学习笔记从</span>
+                                    <span class="review-symbol">></span>
+                                    <a class="review-sendto">我爱你</a>
+                                </div>
+                                <div class="review-time">2022-10-4-20:58</div>
+                            </div>
+                            <div class="review-describe">
+                                这份学习笔记从微这份学习笔记从微服务的发展由
+                            </div>
+                            <a href="#" class="review-new-answer">回复</a>
+                        </div>
+                    </div>
+                    
+                </div> -->
+            </div>
+        </div>    
+
+ 
+
+    </div>
+
+</body>
+
+
+
+<script>
+
+    let array = getParam();
+    // 获取 url 参数
+    function getParam(){
+        // http://127.0.0.1:8080/online_oj/reviewDetail.html?id=1&usernsame=8
+        let param = location.search;
+        let qs = (param.length > 0 ? param.substring(1): '');
+
+        // 保存数据的对象
+        let array = [];
+
+        let items = (qs.length > 0 ? qs.split('&') : []);
+        // 将每一个添加到 array 中
+        for (item of items) {
+            let ob = item.split('=');
+            array[ob[0]] = ob[1];
+        }
+        return array;
+    }
+
+</script>
+
+
+<script>
+
+    // 1. 更新一级评论的详细信息
+    getSettlementDetail();
+    // (1). 发送请求
+    function getSettlementDetail(){
+        $.ajax({
+            url: './settledetail' + location.search,
+            type: 'get',
+            success: function(data, status, resp){
+                if(resp.getResponseHeader('REDIRECT') == 'true'){
+                    location.href = resp.getResponseHeader('SENDPATH');
+                    return;
+                }
+
+                if(resp.getResponseHeader('ERRORREASON') != null){
+                    alert(decodeURI(resp.getResponseHeader('ERRORREASON')));
+                    return;
+                } 
+
+                mergeSettlement(data);
+            },
+        });
+    }
+    // (2). 更新一级评论的详细信息
+    function mergeSettlement(data){
+
+        let docu_title = $('head title');
+        docu_title.text(data.title + '-Online Judge');
+
+        $('#settle-detail-a').attr({
+            'href': './userDetail.html?username=' + data.username,
+            'target': '_blank'
+        });
+
+        $('.settle-detail-myphoto').attr({
+            'src': './image/' + data.userphoto,
+            'title': data.username
+        });
+        
+        $('.settle-detail-title').text(data.title);
+        $('.settle-detail-time').text(data.time);
+
+        $('#settle-detail-content').text('');
+        // 调用一个editormd的 markdownToHTML方法
+        // 需要引入editor.md的js
+        editormd.markdownToHTML('settle-detail-content',
+        {
+            markdown: data.content,
+        });
+        
+    }
+</script>
+
+
+
+
+<!-- 评论 -->
+<script>
+
+        // 得到这个题目所有评论的数目
+        let reviewCount = getCount();
+        $('#count').text(reviewCount);
+
+        // 初始化输入框
+        var write = editormd("first-write-one", {
+            width: "100%",
+            //设定编辑器高度
+            height: "180px",
+            //编辑器初始化内容
+            markdown: "",
+            //指定editor.md依赖的插件
+            path: "editor2.md/lib/",
+            // 通过这个属性，来指定 editor.md 把编辑器中容放    到 textarea（多行文本框）中
+            saveHTMLToTextArea:true,
+            emoji: true,
+            watch: false,
+            lineNumbers:false,
+        });
+        $('.editormd-markdown-textarea').attr    ({'placeholder': ''});
+        getReview();
+   
+
+    // 1. 得到这个题目所有评论的数目
+    function getCount(){
+        let num = 0;
+        $.ajax({
+            url: './settlereviewcount?settleId=' + array['id'],
+            method: 'get',
+            async: false,
+            success: function(data, status){
+                num = data.count;
+            }
+        });
+        return num;
+    }    
+
+    // 4. 提交一级评论功能
+    function submitreview(){
+        if($.trim( $('#first-write-one textarea').val() ) == ''){
+            alert('评论不可以为空!!!');
+            return;
+        }
+        let data = {
+            settleId: array['id'],
+            content: $('#first-write-one textarea').val()
+        }
+
+        $.ajax({
+            url: './submitsettlereview',
+            method: 'post',
+            contentType: 'application/json;charset=utf8',
+            data: JSON.stringify(data),
+            success: function(data, status){
+                alert('发布成功!!!');
+
+                // 更新总评论数
+                let reviewCount = getCount();
+                $('#count').text(reviewCount);
+
+                // 查看所有一级评论
+                getReview();
+            
+                text = '';
+                reading = true;
+                writing();  
+            }
+        });
+    }
+
+
+    // 二. 查看评论功能
+    // 1. 查看一级评论
+    function getReview(){
+        $('.review-list-one').remove();
+        $.ajax({
+            url: './settlereview?settleId=' + array['id'],
+            method: 'get',
+            success: function(data, status){
+                mergeReview(data);
+            }
+        });
+    }
+
+    function mergeReview(data){
+        let review_list = $('.review-list');
+
+        for (review of data) {
+            let list_one = $('<div>');
+            list_one.addClass('review-list-one');
+            list_one.attr({
+                'id': review.id
+            })
+
+            let first = $('<div>');
+            first.addClass('review-first');
+
+            let front = $('<div>');
+            front.addClass('review-front');
+
+            let a = $('<a>');
+            let img = $('<img>');
+            img.addClass('review-myphoto');
+            img.attr({
+                'src': './image/' + review.userphoto,
+                'title': review.username,
+            });
+            a.append(img);
+            a.attr({
+                'href': 'userDetail.html?username=' + review.username,
+                'target': '_blank'
+            });
+
+            front.append(a);
+
+            let username = $('<span>');
+            username.addClass('review-username');
+            username.text(review.username);
+            front.append(username);
+
+            first.append(front);
+
+            let time = $('<div>');
+            time.addClass('review-time');
+            time.text(review.time);
+            first.append(time);
+
+            list_one.append(first);
+
+            let content = $('<div>');
+            content.addClass('review-content');
+            content.attr({
+                'id': review.id + '-review-content',
+                'style': 'background-color: transparent; font-size: 18px;font-family: STKaiti; padding: 0px'
+            })
+            let textarea = $('<textarea>');
+            textarea.css({
+                'display': 'none'
+            });
+            content.append(textarea);
+            list_one.append(content);
+
+            let a_enlarge = $('<a>');
+            a_enlarge.addClass('enlarge');
+            let num = secReviewCount(review.id);
+            a_enlarge.text('共' + num + '条回复');
+            a_enlarge.attr({
+                'href': '#',
+                'onclick': 'enlargeReview(' + review.id + ', false' + ')'
+            });
+            list_one.append(a_enlarge);
+
+            let a_answer = $('<a>');
+            a_answer.addClass('answer');
+            a_answer.text('回复');
+            a_answer.attr({
+                'href': '#',
+                'onclick': 'addReview(' + review.id + ')'
+            });
+            list_one.append(a_answer);
+
+            let addReview = makeInput(review.id, review.id);
+            list_one.append(addReview);
+
+
+            review_list.append(list_one);
+
+            editormd.markdownToHTML(review.id + '-review-content', {
+                markdown: review.content
+            });
+
+            let id = review.id + '-write-one';
+            var write_one_editor = editormd(id, {
+                width: '100%',
+                height: "100px",
+                markdown: "",
+                path: "editor2.md/lib/",
+                saveHTMLToTextArea:true,
+                emoji: true,
+                watch: false,
+                lineNumbers:false,
+            });
+            $('.editormd-markdown-textarea').attr    ({'placeholder': ''});
+        }
+    }
+
+
+    // 2. 查看二级评论
+    // update==true，表示提交评论后，展示二级评论（不会收起）
+    // update==false，表示用户正常展示、收起评论
+    function enlargeReview(reviewId, update){
+        if( ($('#' + reviewId + ' ' + '.enlarge').text() == '收起评论') && (update == false) ){
+
+            $('#' + reviewId + ' ' + '.review-answer-list').remove();
+
+            let num = secReviewCount(reviewId);
+            $('#' + reviewId + ' ' + '.enlarge').text('共' + num + '条回复');
+
+            return;
+        }
+
+        $('#' + reviewId + ' ' + '.review-answer-list').remove();
+
+        $('#' + reviewId + ' ' + '.enlarge').text('收起评论');
+
+        $.ajax({
+            url: './settlereview?settleId=' + array['id'] + '&' + 'underId=' + reviewId,
+            method: 'get',
+            success: function(data, status){
+                mergeEnlargeReview(data, reviewId);
+            }
+        });
+    }
+
+    function mergeEnlargeReview(data, reviewId){
+        if(data.length == 0){
+            return;
+        }
+        let list_one = $('#' + reviewId);
+        
+        let answer_list = $('<div>');
+        answer_list.addClass('review-answer-list');
+
+        list_one.append(answer_list);
+
+        for (review of data) {
+            let answer_one = $('<div>');
+            answer_one.addClass('review-answer-one');
+            answer_one.attr({
+                'id': review.id + '-answer'
+            })
+
+            let first = $('<div>');
+            first.addClass('review-first');
+
+            let front = $('<div>');
+            front.addClass('review-front');
+
+            let a = $('<a>');
+            let img = $('<img>');
+            img.addClass('review-myphoto');
+            img.attr({
+                'src': './image/' + review.userphoto,
+                'title': review.username,
+            });
+            a.append(img);
+            a.attr({
+                'href': 'userDetail.html?username=' + review.username,
+                'target': '_blank'
+            });
+            front.append(a);
+
+            let username = $('<span>');
+            username.addClass('review-username');
+            username.text(review.username);
+            front.append(username);
+
+            let symbol = $('<div>');
+            symbol.addClass('review-symbol');
+            symbol.text('>');
+            front.append(symbol);
+
+            let sendTo = $('<a>');
+            sendTo.addClass('review-sendto');
+            sendTo.text(review.sendTo);
+            sendTo.attr({
+                'href': 'userDetail.html?username=' + review.username,
+                'target': '_blank'
+            });
+            front.append(sendTo);
+
+            first.append(front);
+
+            let time = $('<div>');
+            time.addClass('review-time');
+            time.text(review.time);
+            first.append(time);
+
+            answer_one.append(first);
+
+            let content = $('<div>');
+            content.addClass('review-describe');
+
+            content.attr({
+                'id': review.id + '-review-describe',
+                'style': 'background-color: transparent; font-size: 18px;font-family: STKaiti; padding: 0px'
+            })
+            let textarea = $('<textarea>');
+            textarea.css({
+                'display': 'none'
+            });
+            content.append(textarea);
+            answer_one.append(content);
+
+    
+
+            let a_answer = $('<a>');
+            a_answer.addClass('review-new-answer');
+            a_answer.text('回复');
+            a_answer.attr({
+                'href': '#',
+                'onclick': 'addReview(' + review.id + ')'
+            });
+            answer_one.append(a_answer);
+
+            answer_list.append(answer_one);
+
+            let addReview = makeInput(reviewId, review.id);
+            answer_list.append(addReview);
+
+            let id = review.id + '-write-one';
+            var write_one_editor = editormd(id, {
+                width: '100%',
+                height: "100px",
+                markdown: "",
+                path: "editor2.md/lib/",
+                saveHTMLToTextArea:true,
+                emoji: true,
+                watch: false,
+                lineNumbers:false,
+            });
+            $('.editormd-markdown-textarea').attr    ({'placeholder': ''});
+
+            editormd.markdownToHTML(review.id + '-review-describe', {
+                markdown: review.content
+            });
+        }
+    }
+
+    // 3. 查看某个一级评论拥有的二级评论的数量
+    function secReviewCount(reviewId) {
+        let num = 0;
+        $.ajax({
+            url: './settlereview?settleId=' + array['id'] + '&' + 'underId=' + reviewId,
+            method: 'get',
+            async:false,
+            success: function(data, status){
+                num = data.length;
+            }
+        });
+        return num;
+    }
+
+
+    // 4. 提交二级评论
+    let display = 'block';
+    function addReview(reviewId){
+        $('.addreview-two').attr({
+            'style': 'display: none'
+        });
+        $('#' + reviewId + '-addreview').attr({
+            'style': 'display: ' + display
+        });
+        if(display == 'block'){
+            display = 'none';
+        } else {
+            display = 'block';
+        }
+    }
+
+    // 5. 设置一个函数，用于拼装评论输入框
+    // 这里的 reviewId 就相当于是 sendTo, 如果是一级评论的话 underId == sendTo; 如果是二级评论的话, underId != sendTo
+    // 
+    function makeInput(underId, sendTo){
+        let addReview = $('<div>');
+        addReview.addClass('addreview-two');
+        addReview.attr({
+            'id': sendTo + '-addreview',
+            'style': 'display: none'
+        });
+
+        let write_one = $('<div>');
+        write_one.attr({
+            'id': sendTo + '-write-one',
+            'style': 'display: block; margin-bottom: 5px',
+            'class': 'write-one'
+        });
+        let textarea_one = $('<textarea>');
+        textarea_one.attr({
+            'style': 'display:none'
+        });
+        write_one.append(textarea_one);
+        addReview.append(write_one);
+
+        let write_two = $('<div>');
+        write_two.attr({
+            'id': sendTo + '-write-two',
+            'style': 'display: none',
+            'class': 'write-two'
+        });
+        let textarea_two = $('<textarea>');
+        textarea_two.attr({
+            'style': 'display:none'
+        });
+        write_two.append(textarea_two);
+        addReview.append(write_two);
+
+        let div = $('<div>');
+
+        let writing = $('<a>');
+        writing.attr({
+            'class': 'writing',
+            'href': '#',
+            'onclick': 'getWrite(' + sendTo + ')'
+        });
+        writing.text('编辑');
+        div.append(writing);
+
+        let read = $('<a>');
+        read.attr({
+            'class': 'read',
+            'href': '#',
+            'onclick': 'preRead(' + sendTo + ')'
+        });
+        read.text('预览');
+        div.append(read);
+
+        let submit = $('<a>');
+        submit.attr({
+            'class': 'submitreview',
+            'href': '#',
+            'onclick': 'submitreviewTwo(' + underId + ',' +  sendTo + ')'
+        });
+        submit.text('提交');
+        div.append(submit);
+
+        addReview.append(div);
+        return addReview;
+    }
+
+    // 6. 预览功能
+    function preRead(reviewId){
+        let oneId = reviewId + '-write-one';
+        let twoId = reviewId + '-write-two';
+
+        if( $('#' + twoId).attr('style') == 'display:block' ){
+            return;
+        }
+        $('#' + twoId).html('');
+
+
+        $('#' + oneId).attr({
+            'style': 'display:none'
+        });
+        $('#' + twoId).attr({
+            'style': 'display:block'
+        });
+
+        let value = $('#' + oneId + ' ' + 'textarea').val();
+        console.log(value);
+        editormd.markdownToHTML(twoId, {
+            markdown: value
+        });
+    }
+
+    // 7. 编辑功能
+    function getWrite(reviewId){
+        let oneId = reviewId + '-write-one';
+        let twoId = reviewId + '-write-two';
+
+        if(reviewId == 'first'){
+            $('#' + oneId).attr({
+                'style': 'display: block'
+            }); 
+        } else {
+            $('#' + oneId).attr({
+                'style': 'display: block; margin-bottom: 5px; width: 100%; height: 100px'
+            });
+        }
+
+        $('#' + twoId).attr({
+            'style': 'display:none'
+        });
+    }
+
+    // 8. 提交二级评论
+    function submitreviewTwo(underId, sendTo){
+        let content = null;
+
+        console.log(underId);
+        console.log(sendTo);
+        
+        if(underId == sendTo){
+            content = $('#' + underId + '-write-one' + ' ' + 'textarea').val();
+        } else {
+            content = $('#' + sendTo + '-write-one' + ' ' + 'textarea').val();
+        }
+
+        let data = {
+            content: content,
+            settleId: array['id'],
+            underId: underId,
+            sendTo: sendTo
+        };
+
+        $.ajax({
+            url: './submitsettlereview',
+            method: 'post',
+            data: JSON.stringify(data),
+            success: function(data, status){
+                alert('评论成功!!');
+        
+                enlargeReview(underId, true);
+
+                // 更新总评论数
+                let reviewCount = getCount();
+                $('#count').text(reviewCount);
+
+                // 由于实在找不到有效的方法使提交后的输入框清空，出此下策
+                $('#' + sendTo + '-addreview').remove();
+                let addReview = makeInput(underId, sendTo);
+                if(underId == sendTo){
+                    $('#' + underId + ' ' + '.answer').after(addReview);
+                } else {
+                    $('#' + sendTo + '-answer').after(addReview);
+
+                    console.log($('#' + sendTo + '-answer'));
+                }
+                var write_one_editor = editormd(sendTo + '-write-one', {
+                    width: '100%',
+                    height: "100px",
+                    markdown: "",
+                    path: "editor2.md/lib/",
+                    saveHTMLToTextArea:true,
+                    emoji: true,
+                    watch: false,
+                    lineNumbers:false,
+                });
+                $('.editormd-markdown-textarea').attr    ({'placeholder': ''});
+                }
+        });
+
+    }
+</script>
+
+
+
+
+
+
+</html>

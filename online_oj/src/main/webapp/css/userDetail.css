@@ -1,0 +1,268 @@
+.container {
+    height: calc(100% - 40px);
+    width: 900px;
+    margin: 0 auto;
+    background-color: rgba(240, 255, 255, 0.6);
+}
+
+
+
+.display {
+    height: 150px;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: start;
+    
+}
+
+.name {
+    width: 600px;
+    padding-left: 10px;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 40px;
+    
+}
+
+.operation div {
+    padding-top: 10px;
+}
+
+.operation a{
+    text-decoration: none;
+    color: gray;
+}
+
+.container .display img {
+    height: 100px;
+    width: 100px;
+    border-radius: 8px;
+}
+
+
+
+.my_container {
+    height: calc(100% - 190px);
+    display: flex;
+    justify-content: start;
+    background-color: rgba(240, 255, 255, 0.8);
+}
+
+
+
+.information {
+    width: 250px;
+    border-radius: 8px;
+    border-right: 1px solid white;
+}
+
+.achievement {
+    width: 650px;
+    border-radius: 8px;
+}
+
+.introduce {
+    height: 300px;
+    padding: 20px;
+    border-bottom: 1px solid white;
+}
+
+.my_introduce {
+    padding-top: 10px;
+    font-size: 17px;
+    font-family: "Lucida Calligraphy", cursive, serif, sans-serif;
+}
+
+
+
+.problem {
+    padding: 20px;
+}
+
+.submit {
+    padding-bottom: 20px;
+    display: block;
+}
+
+#submit {
+     padding-left: 43px;
+}
+
+.pass {
+    display: block;
+}
+
+#pass {
+    padding-left: 25px;
+}
+
+
+.choice {
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    border-bottom: 1px solid white;
+}
+
+.content {
+    overflow: auto;
+    height: 448px;
+}
+
+.choice button {
+    margin: 5px 0;
+    width: 70px;
+    background-color: white;
+    border-radius: 8px;
+    line-height: 46px;
+    text-align: center;
+    font-weight: 600;
+    border: none;
+}
+
+.choice button:active {
+    background-color: rgba(247, 247, 248, 0.8);
+}
+
+.white {
+    background-color: rgba(255, 255, 255);
+}
+
+.grey {
+    background-color: rgba(247, 247, 248, 0.8);
+}
+
+.con_problem, .con_review, .con_method {
+    height: 60px;
+    width: 98%;
+    border: none;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    margin: 0 5px;
+    border-radius: 8px;
+
+    text-decoration: none;
+}
+
+.grey:active {
+    background-color: white;
+}
+.white:active {
+    background-color: rgba(247, 247, 248, 0.8);
+}
+
+
+.pro_id, .pro_title, .re_title, .me_id, .me_title, .me_mytitle {
+    font-size: 15px;
+    line-height: 14px;
+    color: black;
+}
+
+.pro_time, .re_time, .me_time{
+    color: grey;    
+    font-size: 15px;
+}
+
+
+.update-information {
+    background-color: rgba(240, 240, 240, 0.8);
+
+    position: fixed;
+    height: 65%;
+    width: 40%;
+    left: 30%;
+    top: 18%;
+
+    padding: 15px;
+}
+
+.update-password {
+    background-color: rgba(240, 240, 240, 0.8);
+
+    position: fixed;
+    height: 50%;
+    width: 30%;
+    left: 35%;
+    top: 25%;
+
+    padding: 15px;
+}
+
+
+.quit {
+    margin-left: 95%;
+
+    font-size: 20px;
+    color: grey;
+    text-decoration: none;
+}
+
+.update-information div, .update-password div{
+    margin-top: 20px;
+}
+
+
+#update-username, #update-priorpassword, #update-newpassword, #update-againpassword {
+    width: 50%;
+    height: 40px;
+
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+
+    outline: none;
+    margin-top: 5px;
+}
+
+#update-introduce {
+    width: 100%;
+    height: 160px;
+
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 10px;
+    font-size: 16px;
+
+    margin-top: 5px;
+}
+
+#update-myphoto {
+    margin-top: 5px;
+}
+
+.update-save {
+    display: block;
+    height: 40px;
+    width: 70px;
+    margin-left: 82%;
+    background-color: rgba(45, 181, 93);
+    
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

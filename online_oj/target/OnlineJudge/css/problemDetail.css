@@ -1,0 +1,470 @@
+
+a:active {
+    color: grey;
+}
+
+.container {
+    height: calc(100% - 40px);
+    display: flex;
+    justify-content: space-between;
+}
+
+.information, .code {
+    width: 50%;
+    height: 100%;
+}
+
+.information {
+    background-color:rgba(255,255,255,0.6);
+}
+
+.information .choice {
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 2px solid grey;
+ }
+
+ .information .choice button {
+    border: none;
+    height: 40px;
+    width: 120px;
+    border-radius: 8px;
+ }
+
+.information .choice button:active {
+    background-color: grey;
+}
+
+
+
+ /* 一、代码编辑区*/
+ /*.code {*/
+ /*   background-color: rgba(255,255,255,0.7);*/
+ /*}*/
+
+ .code #editor {
+    width: 80%;
+    height: 88%;
+    background-color: rgba(30,30,30,0.6);
+    border: none;
+    border-radius: 8px;
+    margin: 10px 10%;
+ }
+
+ .code .solve{
+    width: 100%;
+    height: 50px;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.code .solve button {
+    width: 126px;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+
+    background-color: bisque;
+}
+
+.code .solve button:active {
+    background-color: grey;
+}
+
+.code .display {
+    width: 80%;
+    height: 200px;
+    background-color: rgba(255,255,255,0.6);
+    margin: auto;
+    border-radius: 8px;
+    padding: 20px;
+
+    font-size: 12px;
+    line-height: 22px;
+
+    overflow: auto;
+}
+ 
+
+/* 二、题目描述区*/
+.description {
+    height: calc(100% - 50px);
+    padding: 20px;
+    overflow: auto;
+ }
+
+.description span {
+    font-size: 13px;
+    color: grey;
+ }
+ 
+.description .level {
+    color: cornflowerblue;
+ }
+
+.description p {
+    height: 596px;
+    padding-top: 20px;
+    font-size: 13px;
+    line-height: 25px;
+}
+
+/* 三、评论区 */
+.review {
+    overflow: auto;
+    height: calc(100% - 50px);
+}
+
+/* 1. 评论输入框 */
+.review-head {
+    width: 100%;
+    height: calc(100% - 380px);
+    padding: 20px;
+ }
+
+.count {
+    height: 20px;
+    margin-bottom: 5px;
+}
+
+#count{
+    font-size: 20px;
+}
+
+.addreview, .addreview-two{
+    border: 1px solid white;
+    padding-bottom: 8px;
+    background-color: rgba(255,255,255,0.6);
+}
+
+#first-write-one, #first-write-two{
+    height: 180px;
+    width: 100%;
+}
+#first-write-two {
+    margin-bottom: 15px;
+}
+
+.write-two {
+    height: 100px;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.writing, .read, .submitreview {
+    text-decoration: none;
+    color: greenyellow;
+    margin-left: 20%;
+}
+
+
+/* 2. 评论展示区 */
+.review-list {
+    width: 100%;
+    height: calc(100% - 373px);
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+
+.review-list-one {
+    padding-bottom: 20px;
+
+}
+
+.review-first {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.review-front {
+    display: flex;
+    justify-content: start;
+}
+
+.review-myphoto {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+}
+
+
+.review-username, .review-symbol, .review-sendto{
+    color: grey;
+    font-size: 14px;
+    padding: 10px 5px;
+
+    text-decoration: none;
+}
+
+.review-symbol {
+    padding: 10px 0px;
+}
+
+.review-time {
+    color: grey;
+    font-size: 12px;
+    padding-top: 10px;
+    padding-right: 40px;
+}
+
+.review-content {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-family: STKaiti;
+    
+}
+
+.answer, .enlarge{
+    text-decoration: none;
+    color: grey;
+    margin-left: 30%;
+    font-size: 10px;
+    color:green;
+}
+
+/* 3. 关于评论的所有回复*/
+.review-answer-list {
+    margin-top: 15px;
+    border: 2px solid white;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.review-answer-one {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 15px 20px;
+}
+
+.review-describe {
+    padding-bottom: 10px;
+    font-size: 18px;
+    font-family: STKaiti;
+}
+
+.review-new-answer {
+    margin-left: 532px;
+    text-decoration: none;
+    color: green;
+    font-size: 10px;;
+}
+
+/* 四、提交记录 */
+.record{
+    margin: 20px 20px;
+    height: calc(100% - 70px);
+    overflow: auto;
+}
+
+/* 1. 当前提交记录展示*/
+.current-record {
+    font-size: 12px;
+    border: 1px solid white;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.current-record div {
+    margin-bottom: 12px;
+}
+
+.current-record-first {
+    display: flex;
+    justify-content: start;
+}
+
+.current-result-error {
+    color: red;
+    width: 120px;
+}
+
+.current-result-right {
+    color: green;
+    width: 120px;
+}
+
+#current-record-detail {
+    color: grey;
+    line-height: 15px;
+}
+
+#current-record-passcount, #current-record-allcase {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.current-record-show {
+    background-color:#F7F7F7;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.current-record-error {
+    border-radius: 8px;
+    background-color: #FCDAD9;
+    padding: 15px;
+}
+
+/* 2. 所有提交记录展示*/
+.all-record {
+    border: 1px solid white;
+}
+
+.record-first, .record-one {
+    width: 100%;
+    height: 50px;
+    padding-left: 60px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.record-first span, .record-one span, .record-one a {
+    width: 300px;
+    line-height: 50px;
+    text-decoration: none;
+}
+
+.grey {
+    background-color: rgba(238, 238, 238, 0.8);
+}
+
+.white {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.record-one {
+    font-size: 13px;
+}
+
+.error {
+    color: brown;
+}
+
+.success {
+    color: green;
+}
+
+/*五、题解 */
+
+.settlement {
+    height: calc(100% - 50px);
+    overflow: auto;
+}
+
+.settlement-head {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+
+    border-bottom: 1px solid grey;
+}
+
+.settlement-search-input {
+    width: 70%;
+    height: 40px;
+
+    border: none;
+    outline: none;
+    padding-left: 10px;
+}
+
+.settlement-search, .settlement-addsettlement {
+    height: 34px;
+    width: 56px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin: 0 8px;
+
+    background-color: green;
+    color: white;
+
+    text-align: center;
+    line-height: 34px;
+}
+
+.settlement-search:active, .settlement-addsettlement:active {
+    border: 1px solid white;
+}
+
+.settlement-list-count {
+    margin-top: 10px;
+    padding-left: 15px;
+    color: grey;
+}
+
+.settlement-list {
+    border-top: 1px solid grey;
+}
+
+.settlement-one {
+    border-bottom: 1px solid grey;
+    padding: 15px 15px 6px;
+}
+
+.settlement-one-head {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.settlement-myphoto {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+}
+
+.settlement-title {
+    padding-left: 10px;
+    font-weight: 600;
+}
+
+.settlement-content {
+    padding: 5px 0px;
+    font-size: 14px;
+}
+
+.settlement-link {
+    display: block;
+    width: 100%;
+    text-decoration: none;
+    color: grey;
+    text-align: center;
+}
+
+.settlement-link:active {
+    color: white;
+}
+
+
+#loading {
+    width: 50%;
+    height: calc(100% - 40px);
+    position:fixed;
+    background-color: rgba(255,255,255,0.6);
+    top:17%;
+    left: 0;
+    
+    z-index:99999;
+
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    line-height: 713px;
+}
+
+
+
+
+
+
+
+
+
+

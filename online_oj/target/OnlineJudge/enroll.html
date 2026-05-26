@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册</title>
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel = "stylesheet" href = "./css/enroll.css">
+    <!-- 引入jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <img src="image/图标.jpg">
+        <span class="title">Online Judge</span>
+    </div>
+    <div class="enroll">
+        <h2>注册</h2>
+            <div class="username">
+                <span>用户名</span>
+                <input type="text" id="username">
+            </div>
+            <div class="password">
+                <span>密码</span>
+                <input type="password" id="password">
+            </div>
+            <div class="passwordAgain">
+                <span>请再次输入密码</span>
+                <input type="password"  id="passwordAgain">
+            </div>
+            <div class="photo">
+                <span>选取头像</span>
+                <input type="file" id="photo">
+            </div>
+            <div class="introduce">
+                <span>个人简介</span>
+                <textarea placeholder="不超过50个字" id="introduce"></textarea>
+            </div>
+            <div class="validatecode">
+                <span>验证码</span>
+                <span class="space"></span>
+                <input type="text"  id="validatecode">
+                <img src="./checkcode" id="image">
+                <a href="#" onclick="resetcode()">换一张</a>
+            </div>
+            
+            <div class="result">
+                <button id="submit" onclick="submit()">提交</button>
+
+                <a href="login.html" id="login">已有账号?快速登录</a>
+            </div>      
+    </div>
+</body>
+<script>
+    function submit() {
+        // 获取参数元素
+        let username = $('#username');
+        let password = $('#password');
+        let passwordAgain = $('#passwordAgain');
+        let photo = $('#photo')[0].files[0];
+
+        let introduce = $('#introduce');
+        let validatecode = $('#validatecode');
+
+
+        // 1. 构建 formdata 对象
+        let formdata = new FormData();
+
+        // 3. 校验参数
+        if($.trim(username.val()) == "" ){
+            alert("用户名为空!!!");
+            username.focus();
+            resetcode();
+            return;
+        }
+
+        if($.trim(password.val()) == ""){
+            alert("密码为空!!!");
+            password.focus();
+            resetcode();
+            return;
+        }
+
+        if($.trim(passwordAgain.val()) == ""){
+            alert("请再次输入密码!!!");
+            passwordAgain.focus();
+            resetcode();
+            return;
+        }
+
+        if(password.val() != passwordAgain.val()){
+            alert("两次输入的密码不一致!!!");
+            resetcode();
+            return;
+        }
+
+        if(introduce.val().length > 50){
+            alert("个人简介不可超过50字!!!");
+            resetcode();
+            return;
+        }
+
+        if(validatecode.val() == ""){
+            alert("请输入验证码!!!");
+            validatecode.focus();
+            resetcode();
+            return;
+        }
+
+        formdata.append("username", username.val());
+        formdata.append("password", password.val());
+        formdata.append("passwordAgain", password.val());
+        formdata.append("myfile", photo);
+        formdata.append("introduce", introduce.val());
+        formdata.append("validatecode", validatecode.val());
+
+        // 4. 将对象基于ajax发送到后端
+        $.ajax({
+            url: './enroll',
+            type: 'post',
+            data: formdata, //直接将对象放在data中即可
+
+            // ajax 发送文件必须指定两个参数
+            contentType: false, //告诉浏览器不需要带任何编码，Django后端能够自动识别formdata对象，
+            processData: false, //告诉浏览器，不要对数据进行任何处理，原封不动发送到后端。
+
+            success: function (data, status){
+                if(data.error == 0){
+                    alert("注册成功!!!");
+                    window.location = "./login.html";
+                } else {
+                    alert(data.reason);
+                    resetcode();
+                }
+            }
+        });
+    }
+    
+    function resetcode(){
+        let img = document.querySelector('#image');
+        let getTimestamp = new Date().getTime();
+        img.src = "./checkcode?timestamp=" + getTimestamp;
+        console.log(img.src);
+    }
+
+</script>
+</html>

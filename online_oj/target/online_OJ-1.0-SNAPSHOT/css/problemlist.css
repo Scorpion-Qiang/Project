@@ -1,0 +1,103 @@
+.container {
+    /* 设置宽度 */
+    width: 60%;
+    /* 设置高度 */
+    height: calc(100% - 40px);
+    /* 位置居中 */
+    margin: 0 auto;
+    /* 背景色 */
+    background-color: rgba(255,255,255,0.6);
+    /* 圆角矩形 */
+    border-radius: 8px;
+    /* 设置内边距，避免文字紧贴边框 */
+    padding: 25px; 
+
+    /* 超出元素的部分，自动生成滚动条 */
+    overflow: auto;
+}
+
+.header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#query {
+    width: 87%;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    
+    padding: 2px 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+.header #search {
+    width: 11%;
+    height: 40px;
+    background-color: rgb(97, 97, 224);
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    text-decoration: none;
+
+    text-align: center;
+    line-height: 40px;
+}
+
+.header #search:active {
+    background-color: gray;
+}
+
+.table {
+    padding: 20px 80px;
+    margin: auto;
+    width: 100%;
+
+}
+
+.table .row {
+    height: 50px;
+    text-align: center;
+}
+
+.table .row a {
+    text-decoration: none;
+    color: grey;
+}
+
+.table .id {
+    width: 10%;   
+}
+
+.table .title {
+    width: 70%;
+}
+
+.table .level {
+    width: 20px;
+
+}
+
+#loading {
+    width: 59%;
+    height: calc(100% - 40px);
+    position:fixed;
+    background-color: rgba(255,255,255,0.6);
+    top:14%;
+    left: 20%;
+    
+    z-index:99999;
+
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    line-height: 713px;
+}
+
+#no-result {
+    font-size: 20px; 
+}

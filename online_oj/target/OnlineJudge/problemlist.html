@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>题库-Online Judge</title>
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel = "stylesheet" href = "./css/problemlist.css">
+
+    <!-- 引入JQuery-->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <img src="image/图标.jpg">
+        <span class="title">Online Judge</span>
+        <span class="spacer"></span>
+        <a href="userDetail.html">个人主页</a>
+        <a href="problemlist.html">题库</a>
+        <a href="reviewlist.html">讨论</a>
+    </div>
+
+    <div class="container">
+        <!-- 搜索框 + 搜索按钮 -->
+        <div class="header">
+            <input type="text" id="query">
+            <a id="search" href="#" onclick="searcher()">搜索</a>
+        </div>
+            <table class="table">
+
+                <div id="loading" style="display: none">
+                    loading...
+                </div>
+
+                <div id="no-result" style="display: none;">没有找到相应的搜索结果...</div>
+
+                <tr class="row">
+                    <th class="id"> 序号 </th>
+                    <th class="title"> 题目名称</th>
+                    <th class="level"> 难度 </th>
+                    <th class="status">状态</th>
+                </tr>
+
+
+
+                <tbody id="tbody">
+                    <!-- <tr class="row">
+                        <td class="id"> 1 </td>
+                        <td class="title"> 
+                            <a href="#">两数相加</a>  
+                        </td>
+                        <td class="level"> 简单 </td>
+
+                    </tr> -->
+                </tbody>
+                
+            </table>
+        <!-- 搜索结果显示 -->
+        <div class="result">
+
+        </div>
+    </div>
+</body>
+
+<!-- 进入这个页面，就执行<script>中的语句 -->
+<script>
+
+    // 调用 getProblem 函数，函数调用和函数定义无顺序的
+    getProblem();
+    function getProblem(){
+       $.ajax({
+        url: './problem',
+        method: 'GET',
+        success: function(data, status, resp){
+            if(resp.getResponseHeader('REDIRECT') == 'true'){
+                location.href = resp.getResponseHeader('SENDPATH');
+            }
+            makeProblemList(data);
+        }
+        
+       }); 
+    }
+
+    // 将响应拼接称 table
+    function makeProblemList(data){
+        let tbody = document.querySelector('#tbody');
+
+        for (problem of data) {
+            let tr = document.createElement('tr');
+            tr.className = 'row';
+
+            let tdId = document.createElement('td');
+            tdId.className = 'id';
+            tdId.innerHTML = problem.id;
+            tr.appendChild(tdId);
+
+            let tdTitle = document.createElement('td');
+            tdTitle.className = 'title';
+            let a = document.createElement('a');
+            a.href = 'problemDetail.html?id=' + problem.id;
+            a.innerHTML = problem.title;
+            a.target = '_blank';
+            tdTitle.appendChild(a);
+            tr.appendChild(tdTitle);
+
+            let tdLevel = document.createElement('td');
+            if(problem.level == '简单'){
+                tdLevel.className = 'level easy';
+            }
+            if(problem.level == '中等'){
+                tdLevel.className = 'level medium';
+            }
+            if(problem.level == '困难'){
+                tdLevel.className = 'level hard';
+            }
+            tdLevel.innerHTML = problem.level;
+            tr.appendChild(tdLevel);
+
+            let status = document.createElement('td');
+            let statusClass = '';
+            let statusText = '';
+            if(problem.status == 0){
+                statusClass = 'pass';
+                statusText = '√';
+            } else if(problem.status == 1){
+                statusClass = 'error';
+                statusText = '×';
+            }
+            status.className = 'status ' + statusClass;
+            status.innerHTML = statusText;
+            tr.appendChild(status);
+
+            tbody.appendChild(tr);
+        }
+    }
+
+
+
+</script>
+
+
+<!-- 休眠函数 -->
+<script>
+    function sleeping(n){
+        let start = new Date().getTime();
+        while(true){
+            if((new Date().getTime() - start) > n){
+                break;
+            }
+        }
+    }
+</script>
+
+<!-- 搜索处理 -->
+<script>
+    function searcher(){
+        let query = $('#query').val();
+        if($.trim(query) == ''){
+            alert('搜索内容不可以为空!!!');
+            $('#query').focus();
+            return;
+        }
+
+        $('#loading').attr({
+            'style': 'display: block'
+        });
+
+        let data = {
+            'query': query
+        }
+
+        $.ajax({
+            url: './searcherproblem',
+            method: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data, status){
+                $('#tbody').empty();
+
+                if(data.length == 0){
+                    $('.table .row').attr({
+                        'style': 'display: none'
+                    });
+
+                    $('#no-result').attr({
+                        'style': 'display: block'
+                    });
+                } else {
+                    $('.table .row').attr({
+                        'style': ''
+                    });
+
+                    $('#no-result').attr({
+                        'style': 'display: none'
+                    });
+                    makeProblemList(data);
+                }
+
+                sleeping(1000);
+                $('#loading').attr({
+                    'style': 'display: none'
+                });
+            }
+        })
+    }
+</script>
+
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title></title>
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+
+    <link rel="stylesheet" href="./css/reviewDetail.css">
+
+    <!-- 引入JQuery-->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+    <!-- 此处要引入editor.md的依赖 -->
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <img alt="头像" src="./image/图标.jpg">
+        <span class="title">Online Judge</span>
+        <span class="spacer"></span>
+        <a href="userDetail.html">个人主页</a>
+        <a href="problemlist.html">题库</a>
+        <a href="reviewlist.html">讨论</a>
+    </div>
+
+    <div class="container">
+        <div class="first-review-detail">
+            <div class="first-review-detail-first">
+                <a href="#" id="first-review-detail-a">
+                    <img src="#" class="first-review-detail-myphoto">
+                </a>
+                
+                <div class="first-review-detail-title"></div>
+            </div>
+            <div class="first-review-detail-time">2022-10-4-20:58</div>
+            <!-- 这个style一定要加，统一背景色的秘密在这里 -->
+            <div id="first-review-detail-content" style="background-color: transparent; font-size: 16px; padding-left: 0px">这份学习笔记从微服务的发展由来开始讲解，同时也讲到了微服务的应用落地实践，再到微服务的发展、进阶过程，最后到微服务下一代的发展过程，每个章节总结的都非常详细、非常到位。看完之后只想说一句：不愧是谷歌架构师，属实牛逼！如果你在同一个公司通过了其中一个环节后又收到了下一个环节的通知，请在原帖中更新而不是创建一个新的帖子。
+                更好的排版可以让你的帖子更好地被看到，你可以点击「力扣编辑器使用说明」了解力扣编辑器的使用说明，点击「中文文案排版指北」
+                如果你的帖子不符合以上发帖规定及「力扣社区管理规定」，力扣社区管理团队可能会对你的帖子&文章进行包括且不限于修改、删除等操作。
+                关于「求职面试」发帖规则如果有更多疑问，可以「点击这里」向我们反馈并获得更多帮助～
+            </div> 
+            <a id="first-review-detail-answer" href="#">回复评论</a>               
+        </div>
+
+        <div class="review-count-show"></div>
+
+
+        <!-- <div class="second-review-one" id="2">
+            <div class="first">
+                <div class="front">
+                    <a href="3">
+                        <img src="./image/图标.jpg" class="myphoto">
+                    </a>
+                    <a class="username">这份学习笔记从</a>
+                    <span class='monitor'>楼主</span>
+                    <span class="symbol">></span>
+                    <a class="sendto">
+                    这份学习笔记从微</a>
+                    <span class='monitor'>楼主</span>
+                </div>
+                
+                <div class="time">2022-10-4-20:58</div>
+            </div>
+
+            <div class="second-review-one-precontent" id="2-second-review-one-precontent">
+                <textarea style="display: none"></textarea>
+            </div>
+
+            <div class="second-review-one-content" id="2-second-review-one-content">
+                <textarea style="display: none"></textarea>
+            </div>
+
+            <a href="#" class="enlarge" onclick="enlargeSecReview(2)">展开评论</a>
+            <a href="#" class="answer" onclick="answerReview(2, 'a辉')">回复</a>
+
+            <div class="third-review-list">
+                 <div class="third-review-one">
+                    <div class="first">
+                        <div class="front">
+                            <img src="./image/图标.jpg"class="myphoto">
+                            <a class="username" href='./userDetail.html?username='..''>这份习笔记从</a>s
+                        </div>
+                        <div class="time">2022-10-4-20:58</div>
+                    </div>
+                    <div class="third-review-one-content" id='4-third-review-one-content'>
+                        <textarea style='display: none'><textarea>
+                    </div>
+                    <a href="#" class="third-review-one-answer">回复<a>
+                </div> 
+            </div>
+        </div> -->
+    </div> 
+
+    <div class="popbox" style="display:none">
+        <div class="popbox-send">
+            <span class="popbox-sendto"></span>
+            <a href="#" class="popbox-submit" onclick="submit()">发布评论</a>
+            <a href="#" class="popbox-cancel" onclick="cancel()">取消</a>
+        </div>
+
+        <!-- 引入editor.md编辑器 -->
+        <div id="editor">
+            <!-- 设置一个隐藏的textarea -->
+            <textarea style="display: none;"></textarea>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<script>
+    let array = getParam();
+    // 获取 url 参数
+    function getParam(){
+        // http://127.0.0.1:8080/online_oj/reviewDetail.html?id=1&usernsame=8
+        let param = location.search;
+        let qs = (param.length > 0 ? param.substring(1): '');
+
+        // 保存数据的对象
+        let array = [];
+
+        let items = (qs.length > 0 ? qs.split('&') : []);
+        // 将每一个添加到 array 中
+        for (item of items) {
+            let ob = item.split('=');
+            array[ob[0]] = ob[1];
+        }
+        return array;
+    }
+
+    let input = editormd('editor', {
+        //这里的尺寸必须在这里设置. 设置样式会editormd 自覆盖掉. 
+        width: "100%",
+        //设定编辑器高度
+        height: "400px",
+        //编辑器初始化内容
+        markdown: "# 记录评论",
+        //指定editor.md依赖的插件
+        path: "editor.md/lib/",
+        // 通过这个属性，来指定 editor.md 把编辑器中容放到 textarea（多行文本框）中
+        saveHTMLToTextArea:true
+    });
+
+</script>
+
+
+<script>
+    // 全局变量，这个一级评论的作者
+    let username = null;
+
+    // 1. 更新一级评论的详细信息
+    getReviewDetail();
+    // (1). 发送请求
+    function getReviewDetail(){
+        $.ajax({
+            url: './reviewdetail' + location.search,
+            type: 'get',
+            success: function(data, status, resp){
+
+                if(resp.getResponseHeader('REDIRECT') == 'true'){
+                    location.href = resp.getResponseHeader('SENDPATH');
+                    return;
+                }
+
+                if(resp.getResponseHeader('ERRORREASON') != null){
+                    alert(decodeURI(resp.getResponseHeader('ERRORREASON')));
+                    return;
+                } 
+
+                username = data.username;
+                mergeReview(data);
+                getSecondReview();
+            }
+            
+        });
+    }
+    // (2). 更新一级评论的详细信息
+    function mergeReview(data){
+        let docu_title = $('head title');
+        docu_title.text(data.title + '-Online Judge');
+
+        $('#first-review-detail-a').attr({
+            'href': 'userDetail.html?username=' + data.username,
+            'target': '_blank'
+        });
+
+        $('.first-review-detail-myphoto').attr({
+            'src': './image/' + data.userphoto,
+            'title': data.username
+        });
+        
+        $('.first-review-detail-title').text(data.title);
+        $('.first-review-detail-time').text(data.time);
+
+        $('#first-review-detail-content').text('');
+        // 调用一个editormd的 markdownToHTML方法
+        // 需要引入editor.md的js
+        editormd.markdownToHTML('first-review-detail-content',
+        {
+            markdown: data.content,
+        });
+
+        
+    }
+
+    // 2. 更新所有的二级评论
+    // (1). 发送请求
+    function getSecondReview(){
+        $.ajax({
+            url: './secreview?underId=' + array['id'],
+            method: 'get',
+            async: false,
+            success: function(data, status){
+                $('.review-count-show').text('共' + data.length + '个回复');
+                mergeSecondReview(data);
+            }
+        });
+    }
+
+    // (2). 更新所有的二级评论
+    function mergeSecondReview(data){
+        let container = $('.container');
+
+        for (secreview of data) {
+            let secReview = $('<div>');
+            secReview.addClass('second-review-one');
+            secReview.attr({
+                'id': secreview.id
+            });
+
+            let first = $('<div>');
+            first.addClass('first');
+
+            let front = $('<div>');
+            front.addClass('front');
+
+            let a = $('<a>');
+            let img = $('<img>');
+            img.addClass('myphoto');
+            img.attr({
+                'src': './image/' + secreview.userphoto, 'title': secreview.username
+            });
+            a.append(img);
+            a.attr({
+                'href': './userDetail.html?username=' + secreview.username,
+                'target': '_blank'
+            });
+            front.append(a);
+            
+
+        
+            let user_name = $('<a>');
+            user_name.addClass('username');
+            user_name.text(secreview.username);
+            front.append(user_name);
+
+            if(secreview.username == username){
+                let monitor = $('<span>');
+                monitor.addClass('monitor');
+                monitor.text('楼主');
+                front.append(monitor);
+            }
+
+            // 如果是发给一级评论的，sendTo == null && preContent == null
+            if(secreview.sendTo != null){
+                let symbol = $('<span>');
+                symbol.addClass('symbol');
+                symbol.text('>');
+                front.append(symbol);
+
+                let sendto = $('<a>');
+                sendto.addClass('sendto');
+                sendto.text(secreview.sendTo);
+                sendto.attr({
+                    'href': './userDetail.html?username=' + secreview.sendTo,
+                    'target': '_blank'
+                });
+                front.append(sendto);
+
+                if(secreview.sendTo == username){
+                    let monitor = $('<span>');
+                    monitor.addClass('monitor');
+                    monitor.text('楼主');
+                    front.append(monitor);
+                }
+            }
+            first.append(front);
+
+            let time = $('<div>');
+            time.addClass('time');
+            time.text(secreview.time);
+            first.append(time);
+
+            secReview.append(first);
+
+
+            if(secreview.preContent != null){
+                let preContent = $('<div>');
+                preContent.addClass('second-review-one-precontent');
+                preContent.attr({
+                    'id': secreview.id + '-second-review-one-precontent',
+                    'style': 'padding: 8px; font-size: 14px;'
+                });
+                secReview.append(preContent);
+            }
+
+
+            let content = $('<div>');
+            content.addClass('second-review-one-content');
+            content.attr({
+                'id': secreview.id + '-second-review-one-content',
+                'style': 'background-color: transparent; padding: 0px; font-size: 16px;'
+            });
+            secReview.append(content);
+
+
+            let enlarge = $('<a>');
+            enlarge.addClass('enlarge');
+            let num = enlargeReviewCount(secreview.id);
+            enlarge.text('展开评论' + '(' + num + ')');
+            enlarge.attr({
+                'onclick': 'enlargeSecReview(' + secreview.id + ',' + false + ')', 
+                'href': '#'
+            });
+            secReview.append(enlarge);
+
+            let answer = $('<a>');
+            answer.addClass('answer');
+            answer.text('回复');
+            answer.attr({
+                'onclick': 'answerReview(' + secreview.id + ',' + '\'' +  secreview.username + '\'' + ')', 
+                'href': '#'
+            });
+            secReview.append(answer);
+
+            let thirdReviewList = $('<div>');
+            thirdReviewList.addClass('third-review-list');
+            secReview.append(thirdReviewList);
+
+            container.append(secReview);
+
+
+            editormd.markdownToHTML(secreview.id + '-second-review-one-content',
+            {
+                markdown: secreview.content
+            });
+
+            editormd.markdownToHTML(secreview.id + '-second-review-one-precontent',
+            {
+                markdown: secreview.preContent
+            });
+
+            
+        }
+    }
+
+    // 3. 某个二级评论的三级评论的数目
+    function enlargeReviewCount(reviewId){
+        let res = 0;
+        $.ajax({
+            url: './appointreview?sendto=' + reviewId,
+            method: 'GET',
+            // 同步调用
+            async: false,
+            success: function(data, status){
+                res = data.length;
+            }
+        });
+        return res;
+    }
+
+    // 4. 更新某个二级评论的所有的三级评论
+    // (1). 发送请求
+    function enlargeSecReview(reviewId, isSubmit){
+        console.log(isSubmit);
+        // (1-1). 判断点击时，是否是收回操作
+        let review = $('#' + reviewId);
+        if( $('#' + reviewId + ' ' + '.enlarge').text() == '收起评论.....' && isSubmit == false){
+            $('#' + reviewId + ' ' + '.third-review-list').empty();
+
+            let num = enlargeReviewCount(reviewId);
+            $('#' + reviewId + ' ' + '.enlarge').text('展开评论' + '(' + num + ')');
+
+            return;
+        }
+
+        $('#' + reviewId + ' ' + '.third-review-list').empty();
+
+        // (1-2). 不是收回操作，发送请求
+        $.ajax({
+            url: './appointreview?sendto=' + reviewId,
+            method: 'GET',
+            success: function(data, status){
+                mergeSendtoReview(data, reviewId);
+            }
+        });
+    }
+    // (2). 更新某个二级评论所有的三级评论
+    function mergeSendtoReview(data, reviewId){
+        $('#' + reviewId + ' ' + '.enlarge').text('收起评论.....');
+
+        let thirdReviewList = $('#' + reviewId + ' ' + '.third-review-list');
+
+        for (thirdReview of data) {
+            let review = $('<div>');
+            review.addClass('third-review-one');
+
+            let first = $('<div>');
+            first.addClass('first');
+
+            let front = $('<div>');
+            front.addClass('front');
+
+            let a = $('<a>');
+            let img = $('<img>');
+            img.addClass('myphoto');
+            img.attr({
+                'src': './image/' + thirdReview.userphoto, 
+                'title': thirdReview.username
+            });
+            a.append(img);
+            a.attr({
+                'href': './userDetail.html?username=' + thirdReview.username,
+                'target': '_blank'
+            });
+            front.append(a);
+
+            let user_name = $('<a>');
+            user_name.addClass('username');
+            user_name.text(thirdReview.username);
+            front.append(user_name);
+            if(thirdReview.username == username){
+                let monitor = $('<span>');
+                monitor.addClass('monitor');
+                monitor.text('楼主');
+                front.append(monitor);
+            }
+
+            first.append(front);
+
+            let time = $('<div>');
+            time.addClass('time');
+            time.text(thirdReview.time);
+            first.append(time);
+
+            review.append(first);
+
+            let content = $('<div>');
+            content.addClass('third-review-one-content');
+            content.attr({
+                'id': thirdReview.id + '-third-review-one-content',
+                'style': 'background-color: transparent; padding: 0px; font-size: 16px;'
+            });
+            review.append(content);
+
+            let answer = $('<a>');
+            answer.addClass('third-review-one-answer');
+            answer.attr({
+                'href': '#', 
+                'onclick': 'answerReview(' + thirdReview.id + ',' + '\''  + thirdReview.username + '\'' + ')' 
+            });
+            answer.text('回复');
+            review.append(answer);
+
+            thirdReviewList.append(review);
+
+            editormd.markdownToHTML(thirdReview.id + '-third-review-one-content', {
+                markdown: thirdReview.content
+            })
+        }
+    }
+
+
+
+    // 5. 某个二级评论的回复
+    // underId 就是 array['id'];
+    // sendTo
+    // name 用于前端显示，不传后端 
+    function answerReview(sendTo, name){
+        $('.popbox').attr({
+            'style': 'display: block'
+        });
+        $('.popbox-sendto').text('@' + name);
+        $('.popbox-submit').attr({
+            'onclick': 'submit(' + sendTo + ')'
+        });
+    }
+
+    // 6. 评论编辑框的提交按钮
+    // (1). 发送请求
+    function submit(sendTo){
+        // (1-1). 校验内容
+        if($.trim( $('#editor textarea').val() ) == ''){
+            alert('评论不可以为空!!');
+            $('#editor textarea').focus();
+            return;
+        }
+        // (1-2). 组织数据
+        let data = {
+            content: $('#editor textarea').val(),
+            underId: array['id'],
+            sendTo: sendTo
+        }
+        // (1-3). 发送请求
+        $.ajax({
+            url: './submitreview',
+            method: 'post',
+            contentType: 'application/json;charset=utf8',
+            data: JSON.stringify(data),
+
+            success: function(data, status){
+                if(data.error == 0){
+                    alert('提交成功！！！');
+                } else {
+                    alert(data.reason);
+                    return;
+                }
+
+                // (1-4). 响应成功，隐藏输入框
+                $('.popbox').attr({
+                    'style': 'display: none'
+                });
+
+
+                $('.second-review-one').remove();
+                getSecondReview();
+
+                // (1-4-1). 如果 underId == sendto，说明提交的是二级评论，更新二级评论
+                if(array['id'] == sendTo){
+                    $('.review-count-show').focus();
+                } else {
+                // (1-4-2). 如果 underId != sendto，说明提交的是三级级评论，展开对应的二级评论
+                    $('#' + sendTo).focus();
+                    enlargeSecReview(sendTo, true);
+                }  
+                
+                // (1-5). 输入框清空
+                // 由于实在找不到有效的方法使提交后的，出此下策
+                $('#editor').empty();
+                let textarea = $('<textarea>');
+                textarea.attr({
+                    'style': 'display: none'
+                });
+                $('#editor').append(textarea);
+                
+                let editor = editormd('editor',  
+                {
+                    width: '100%',
+                    height: "400px",
+                    markdown: "# 记录评论",
+                    path: "editor.md/lib/",
+                    saveHTMLToTextArea: true,
+                });
+            }
+
+        });
+    }
+
+    // 7. 回复一级评论
+    document.querySelector('#first-review-detail-answer').onclick = function(){
+        answerReview(array['id'], username);
+    }
+
+
+    // 8. 取消
+    function cancel(){
+        $('.popbox').attr({
+            'style': 'display: none'
+        });
+    }
+
+
+</script>

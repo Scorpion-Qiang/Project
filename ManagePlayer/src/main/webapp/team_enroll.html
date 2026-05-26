@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球员管理系统登入页面</title>
+    <link rel="stylesheet" href="style/common.css">
+    <link rel="stylesheet" href="style/enroll.css">
+</head>
+<body>
+    <div class="nav">
+        <img src="image/NBA标志.jpg" title="NBA">
+        <span class="title">我的球员管理系统</span>
+        <span class="spacer"></span>
+        <a href="loginout">注销</a>
+
+    </div>
+
+    <!-- 版心 -->
+    <div class="container">
+        <div class="enroll">
+            <h4>注册</h4>
+            <form action="team_enroll" method="post" enctype="multipart/form-data">
+                <div class="user">
+                    <h5>用户名</h5>
+                    <input type="text" name="username">
+                </div>
+                <div class="password">
+                    <h5>密码</h5>
+                    <input type="password" name="password">
+                </div>
+                <div class="password">
+                    <h5>请再输入一次密码</h5>
+                    <input type="password" name="passwordAgain">
+                </div>
+                <div class="verification_code">
+                    <h5>验证码-强仔在哪个大学</h5>
+                    <input type="text" name="verification">
+                </div>
+
+                <!-- 传头像 -->
+                <div class="photo">
+                    <h5>设置头像</h5>
+                    <input class="file" type="file" name="MyFile">
+                </div>
+
+                <!-- 个人简介 -->
+                <div class="introduce">
+                    <h5>个人简介</h5>
+                    <textarea name="introduce" cols="30" rows="10" class="decribe" placeholder="不超过15个字"></textarea>
+                </div>
+
+                <div class="submit">
+                    <input type="submit" value="注册">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

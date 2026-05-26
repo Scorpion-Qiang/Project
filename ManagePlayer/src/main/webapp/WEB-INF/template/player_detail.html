@@ -1,0 +1,118 @@
+<!--动态页面-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球员详情页</title>
+    <link rel="stylesheet" href="style/common.css">
+    <link rel="stylesheet" href="style/detail.css">
+
+    <!-- 此处要引入editor.md的依赖 -->
+    <link rel="stylesheet" href="editor.md/css/editormd.min.css">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+
+</head>
+<body>
+    <div class="nav">
+        <img src="image/NBA标志.jpg" title="NBA">
+        <span class="title">我的球员管理系统</span>
+        <!-- 使用这个span把导航栏撑开 -->
+        <span class="spacer"></span>
+        <a href="player_list.html">主页</a>
+        <a href="player_create.html">添加球员</a>
+
+        <!-- 添加编辑按钮，如果登录的球队和球员所属的球队（作者）是同一个，显示编辑按钮；否则就不显示按钮 -->
+        <a th:if="${showUpdateButton}" th:href="${'player_update?id=' + player.id}">修改</a>
+        
+        <!-- 添加删除按钮，如果登录的球队和球员所属的球队（作者）是同一个，显示删除按钮；否则就不显示按钮 -->
+        <a th:if="${showDeleteButton}" th:href="${'player_delete?id=' + player.id}">删除</a>
+
+        <a href="loginout">注销</a>
+    </div>
+    <!-- 版心 -->
+    <div class="container">
+        <div class="left">
+            <div class="card">
+                <img th:src="${teamAuthor.photoPath}">
+                <div class="name" th:text="${teamAuthor.teamName}"></div>
+                <a href="https://blog.csdn.net/gjwloveforever?type=blog">我的CSDN链接</a>
+                <div class="row">
+                    <span>
+                        <a class="Myplayer" th:href="${'player_list.html?id='+ teamAuthor.id}">我的球员</a>
+                    </span>
+                    <span>
+                        <a class="Myteam" th:href="${'team_list.html'}">球队用户</a>
+                    </span>
+                </div>
+                <div class="row">
+                    <span th:text="${teamAuthor.playerCount}"></span>
+                    <span th:text="${teamCount}"></span>
+                </div>   
+
+                <div class="introduce">
+                    <h4>个人简介</h4>
+                    <div th:text="${teamAuthor.introduce}"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="right">
+            <div class="detail-content">
+                <h3  th:text="${player.playerName}"></h3>
+                <div class="date" th:text="${player.postTime}"></div>
+                <!--添加一个属性，让这个div的背景透明-->
+                <div th:text="${player.content}" id="content" style="background-color: transparent;">
+                
+                </div>
+
+                <div class="detail-review">
+                    <h3>评论区</h3>
+                    <form action="player_review" method="post" class="upreview">
+                        <textarea name="upcontent"  cols="30" rows="10" class="upcontent"></textarea>
+                        <input type="text" th:value="${player.id}" style="display: none;" name="playerId">
+                        <input type="submit" value="发表评论" class="submit">
+                    </form>
+
+
+                    <div class="showreview" th:each="review : ${reviews}">
+                        <div class="from">
+                            <span class="postAuthor" th:text="${review.postAuthor}"></span>
+                            <span class="spacer"></span>
+                            <span class="postTime" th:text="${review.postTime}"></span>
+                        </div>
+
+                        <div class="showother">
+                            <div class="showcontent" th:text="${review.content}"></div>
+
+                            <div class="delete" th:if="${teamName != teamAuthor.teamName}">
+                                <a th:if="${teamName == review.postAuthor}" th:href="${'review_delete?id=' + review.id + '&' + 'teamAuthorId=' + teamAuthor.id}">删除</a>
+                            </div>
+
+                            <div class="delete" th:if="${teamName == teamAuthor.teamName}">
+                                <a th:href="${'review_delete?id=' + review.id + '&' + 'teamAuthorId=' + 'teamAuthor.id'}">删除</a>
+                            </div>
+                        </div>
+                    
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 取出需要渲染的字符串的内容
+        let markdown = document.querySelector('#content').innerHTML;
+        // 将原来的div清空
+        document.querySelector('#content').innerHTML = '';
+        // 调用一个editormd的 markdownToHTML方法
+        // 需要引入editor.md的js
+        editormd.markdownToHTML('content',{markdown: markdown});
+    </script>
+
+</body>
+</html>

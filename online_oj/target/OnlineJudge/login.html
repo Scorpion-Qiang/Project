@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/login.css">
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <img src="image/图标.jpg">
+        <span class="title">Online Judge</span>
+    </div>
+
+    <div class="login">
+        <h2>登录</h2>
+            <div class="username">
+                <span>用户名</span>
+                <input type="text" id="username">
+            </div>
+            <div class="password">
+                <span>密码</span>
+                <input type="password" id="password">
+            </div>
+            <div class="validatecode">
+                <span>验证码</span>
+                <span class="space"></span>
+                <input type="text"  id="validatecode">
+                <img src="./checkcode" id="image">
+                <a href="#" onclick="resetcode()">换一张</a>
+            </div>
+            
+            <div class="result">
+                <button id="submit" onclick="submit()">登录</button>
+
+                <a href="enroll.html" id="login">没有账号?立即注册</a>
+            </div>      
+    </div>
+</body>
+
+<script>
+    let img = document.querySelector('#image');
+    function resetcode(){
+        let getTimestamp = new Date().getTime();
+        img.src = "./checkcode?timestamp=" + getTimestamp;
+        console.log(img.src);
+    }
+
+    function submit(){
+        let username = jQuery('#username');
+        let password = jQuery('#password');
+        let validatecode = jQuery('#validatecode');
+
+        if(jQuery.trim(username.val()) == ''){
+            alert("用户名为空");
+            username.focus();
+            resetcode();
+            return;
+        }
+
+        if(jQuery.trim(password.val()) == ''){
+            alert("密码为空");
+            password.focus();
+            resetcode();
+            return;
+        }
+
+        if(jQuery.trim(validatecode.val()) == ''){
+            alert("验证码为空");
+            validatecode.focus();
+            resetcode();
+            return;
+        }
+
+        let data = {
+            username: username.val(),
+            password: password.val(),
+            validatecode: validatecode.val()
+        }
+        jQuery.ajax({
+            url: './login',
+            type: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(data, status){
+                if(data.error == 0){
+                    window.location = "./problemlist.html";
+                } else{
+                    alert(data.reason);
+                    resetcode();
+                }
+            }
+        });
+    }
+
+</script>
+
+
+</html>

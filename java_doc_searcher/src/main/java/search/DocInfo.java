@@ -1,0 +1,48 @@
+package search;
+
+/**
+ * Created with IntelliJ IDEA.
+ * Description:
+ * User: 强仔
+ * Date: 2022-07-11
+ * Time: 23:43
+ */
+// 文档类  描述了文档的相关信息
+public class DocInfo {
+    private int docId;
+    private String title;
+    private String url;
+    private String content;
+
+    public int getDocId() {
+        return docId;
+    }
+
+    public void setDocId(int docId) {
+        this.docId = docId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+}

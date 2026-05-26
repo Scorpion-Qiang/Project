@@ -1,0 +1,47 @@
+<!--这是个静态页面-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>球员管理系统登入页面</title>
+    <link rel="stylesheet" href="style/common.css">
+    <link rel="stylesheet" href="style/goto.css">
+</head>
+<body>
+    <div class="nav">
+        <img src="image/NBA标志.jpg" title="NBA">
+        <span class="title">我的球员管理系统</span>
+        <span class="spacer">本网站不限于球员管理，用户可写随意日记、博客等，有问题可联系强仔，最终解释权归强仔所有</span>
+        <a href="player_list.html">主页</a>
+        <a href="player_create.html">添加球员</a>
+        <a href="loginout">注销</a>
+    </div>
+
+    <!-- 版心 -->
+    <div class="container">
+        <div class="goto">
+            <h4>登陆</h4>
+            <form action="login" method="post">
+                <div class="user">
+                    <h5>用户名</h5>
+                    <input type="text" name="username">
+                </div>
+                <div class="password">
+                    <h5>密码</h5>
+                    <input type="password" name="password">
+                </div>
+                <div class="submit">
+                    <input type="submit" value="提交">
+                </div>
+            </form>
+            <form action="team_enroll.html" method="post">
+                <div class="enroll">
+                    <input type="submit" value="注册">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+.goto {
+    height: 300px;
+    width: 300px;
+    background-color: rgba(238, 238, 238, 0.8);
+    border-radius: 8px;
+    padding: 36px 35px;
+}
+
+.goto h4 {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.goto .user,
+.goto .password {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.goto input {
+    width: 150px;
+    height: 35px;
+    border-radius: 8px;
+    border: none;
+
+    /* 选中时也去掉轮廓线 */
+    outline: none;
+}
+
+.goto .user {
+    margin-bottom: 6px;
+}
+
+.goto .submit input {
+    margin-top: 4px;
+    width: 230px;
+    background-color: rgb(101, 151, 101);
+    color: white;
+}
+
+.goto .submit input:active {
+    background-color: rgb(99,127,146);
+}
+
+.goto .enroll input {
+    margin-top: 4px;
+    width: 230px;
+    background-color: rgb(185, 129, 185);
+    color: white;
+}
+
+.goto .enroll input:active {
+    background-color: rgb(99, 127, 146);
+}

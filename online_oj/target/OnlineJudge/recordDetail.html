@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 在下面修改 -->
+    <title></title>
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+
+    <link rel = "stylesheet" href = "./css/recordDetail.css">
+
+    <!-- 引入JQuery-->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <img alt="头像" src="./image/图标.jpg">
+        <span class="title">Online Judge</span>
+        <span class="spacer"></span>
+        <a href="userDetail.html">个人主页</a>
+        <a href="problemlist.html">题库</a>
+        <a href="reviewlist.html">讨论</a>
+    </div>
+
+    <div class="container">
+        <div class="record" style="display: none">
+            <div class="problem-title"></div>
+            <div class="introduce">提交记录</div>
+            <div class="record-result">
+                <div class="record-result-first">
+                    <div class="record-result-example">
+                        <span id="passexamplecount"></span>
+                        <span>/</span>
+                        <span id="problemexamplecount"></span>
+                        <span>个测试用例</span>
+                    </div>
+                    <div class="record-result-status">
+                        <span id="record-result-status-first">状态:</span>
+                        <span id="record-result-status-detail"  class="error"></span>
+                    </div>
+                </div>
+
+                <div class="record-result-time">
+                    <span id="record-result-time-first">提交时间:</span>
+                    <span id="record-result-time"></span>
+                </div>
+
+                <pre class="record-result-error-first complieerror" style="display: none">
+                
+                </pre>
+
+                <div class="record-result-error runerror" style="display: none">
+                    <div>错误信息</div>
+                    <pre id="record-result-error-detail"></pre>
+                </div>
+
+                <div class="record-result-finalinput runerror passerror" style="display: none">
+                    <div>最后执行的输入</div>
+                    <pre id="record-result-finalinput-detail"></pre>
+                </div>
+            </div>
+
+            <div class="split-line"></div>
+            <div class="submited-code">
+                <div class="submited-code-first">
+                    <span>提交的代码</span>
+                    <a href="#" id="writing-code" onclick="Writing()">编辑代码</a>
+                </div>
+                <pre id="submited-code-content">
+                   
+                </pre>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+
+<script>
+    let array = getParam();
+    // 获取 url 参数
+    function getParam(){
+        // http://127.0.0.1:8080/online_oj/reviewDetail.html?id=1&usernsame=8
+        let param = location.search;
+        let qs = (param.length > 0 ? param.substring(1): '');
+
+        // 保存数据的对象
+        let array = [];
+
+        let items = (qs.length > 0 ? qs.split('&') : []);
+        // 将每一个添加到 array 中
+        for (item of items) {
+            let ob = item.split('=');
+            array[ob[0]] = ob[1];
+        }
+        return array;
+    }
+</script>
+
+
+<script>
+    let problemId = null;
+    getRecordDetail();
+    function getRecordDetail(){
+        $.ajax({
+            url: './recordDetail' + location.search,
+            method: 'get',
+            success: function(data, status, resp){
+                if(resp.getResponseHeader('REDIRECT') == 'true'){
+                    location.href = resp.getResponseHeader('SENDPATH');
+                    return;
+                }
+
+                if(resp.getResponseHeader('ERRORREASON') != null){
+                    alert(decodeURI(resp.getResponseHeader('ERRORREASON')));
+                    return;
+                } 
+
+                problemId = data.problemId;
+                mergeRecordDetail(data);
+            }
+        });
+    }
+
+    function mergeRecordDetail(data){
+        $('.record').attr({
+            'style': 'display: block'
+        });
+
+        $('head title').text(data.problemtitle + '-提交记录-' + 'Online-Judge');
+
+        $('.problem-title').text(data.problemtitle);
+        $('#passexamplecount').text(data.passExample);
+        $('#problemexamplecount').text(data.allExample);
+
+        let result = null;
+        let className = 'error';
+        if(data.status == 1){
+            result = '编译出错';
+            $('.complieerror').attr({
+                'style': 'display: block'
+            });
+        } else if(data.status == 2){
+            result = '运行出错';
+            $('.runerror').attr({
+                'style': 'display: block'
+            });
+        } else if(data.status == 3){
+            result = '解答出错';
+            $('.passerror').attr({
+                'style': 'display: block'
+            });
+        } else {
+            result = '通过';
+            className = 'right';
+        }
+        $('#record-result-status-detail').addClass(className);
+        $('#record-result-status-detail').text(result);
+
+        $('#record-result-time').text(data.time);
+
+        $('.record-result-error-first').text(data.errorReason);
+        $('#record-result-error-detail').text(data.errorReason);
+
+        $('#record-result-finalinput-detail').text(data.finalInput);
+
+        
+        $('#submited-code-content').text(data.content);
+    }
+
+
+    function Writing(){
+        window.location.href = './problemDetail.html?id=' + problemId+ '&' + 'preRecord=' + array['id'];
+    }
+</script>
+</html>

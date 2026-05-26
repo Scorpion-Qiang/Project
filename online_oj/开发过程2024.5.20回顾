@@ -1,0 +1,10 @@
+编译运行过程:
+1.每一次编译运行一次代码都创建一个临时文件夹
+包括:
+    1. 提交的代码(Solution.java)
+    [.java文件的文件名必须和 类名 相同, 所以直接统一 类名 和 .Java文件名为 Solution]
+    2.子进程编译过程的标准错误内容(complieErr.txt)
+    [javac 编译 Solution.Java 生成字节码文件(.class), 标准输出内容(无需关注), 标准错误内容(complieErr.txt)]
+    [complieErr.txt为空,编译成功; 不为空,编译错误,内容就是编译错误的原因;仅关注标准错误内容即可判断编译是否通过]
+    3.子进程运行过程的标准输出内容(stdout.txt)
+    4.子进程运行过程的标准错误内容(stderr.txt)

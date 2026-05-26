@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="style/common.css">
+    <link rel="stylesheet" href="style/teamlist.css">
+</head>
+<body>
+    <div class="nav">
+        <img src="image/NBA标志.jpg" title="NBA">
+        <span class="title">我的球员管理系统</span>
+        <span class="spacer"></span>
+        <a href="player_list.html">主页</a>
+        <a href="player_create.html">添加球员</a>
+        <a href="loginout">注销</a>
+    </div>
+
+    <div class="team-container">
+        <h3>所有用户</h3>
+        <div class="user" th:each="team : ${teams}">
+            <div class="inform">
+                <img th:src="${team.photoPath}" >
+                <a class="userName" th:href="${'player_list.html?id=' + team.id}" th:text="${team.teamName}"></a>
+                <span class="spacer"></span>
+                <span class="playerCount" style="color:grey">球员数目:</span>
+                <span th:text="${team.playerCount}"></span>
+            </div>
+            <div style="color:grey">个人简介:</div>
+            <div class="introduce" th:text="${team.introduce}"></div>
+        </div>
+
+    </div>
+</body>
+</html>

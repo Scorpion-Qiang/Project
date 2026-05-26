@@ -1,0 +1,133 @@
+.container {
+    width: 100%;
+    height: calc(100% - 40px);
+
+    background-color: rgba(255, 255, 255, 0.6);
+    overflow: auto;
+}
+
+.record {
+    margin: 0 auto;
+    width: 60%;
+    padding: 40px 0px;
+}
+
+.problem-title {
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+.introduce {
+    font-size: 25px;
+    margin-bottom: 5px;
+}
+
+.record-result {
+    border: 1px grey solid;
+    padding: 15px;
+}
+
+.record-result-first {
+    display: flex;
+    justify-content: space-between;
+}
+
+#record-result-status-first, #record-result-time-first {
+    font-size: 14px;
+    color: grey;
+}
+
+.error {
+    color: red;
+}
+
+.right {
+    color: green;
+}
+
+#record-result-status-detail {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.record-result-time {
+    display: flex;
+    justify-content: end;
+}
+
+#record-result-time {
+    line-height: 18px;
+    padding-left: 2px;
+    font-weight: bold;
+    color: black;
+}
+
+.record-result-error-first {
+    margin-top: 10px;
+    background-color: rgb(253, 236, 236);
+    border: 1px solid red;
+    padding: 20px;
+    color: red;
+}
+
+.record-result-error, .record-result-finalinput {
+    margin-top: 10px;
+    padding: 20px;
+    border: 1px solid red;
+}
+
+#record-result-error-detail {
+    padding-top: 10px;
+    color: red;
+}
+
+#record-result-finalinput-detail {
+    padding-top: 10px;
+    color: red;
+    font-weight: bold;
+}
+
+.split-line {
+    border-top: 1px solid gray;
+    margin: 30px 10px;
+}
+
+.submited-code-first {
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#writing-code {
+    width: 70px;
+    height: 35px;
+    font-size: 15px;
+    background-color: rgb(45, 181, 93);
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    line-height: 35px;
+    border-radius: 8px;
+}
+
+#writing-code:active {
+    border: 1px solid white;
+}
+
+#submited-code-content {
+    margin-top: 20px;
+    background-color: rgb(247, 247, 248);
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+
+
+
+
+
+
+

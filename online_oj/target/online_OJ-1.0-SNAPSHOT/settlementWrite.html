@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 后续会写 -->
+    <title></title>
+
+    <link rel="icon" href="./image/图标.jpg">
+
+    <link rel = "stylesheet" href = "./css/settlementWrite.css">
+
+    <link rel="stylesheet" href="./editor.md/css/editormd.min.css">
+
+    <!-- 引入JQuery-->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+
+
+    <!-- 注意这个位置，好烦啊 -->
+    <!--editormd -->
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="head">
+            <input type="text" value="【无标题】" class="head-input">
+            <a href="#" class="head-submit" onclick="submit()">发表题解</a>
+        </div>
+    
+        <div id="editor">
+            <textarea style="display: none"></textarea>
+        </div>
+    </div>
+    
+</body>
+
+<script>
+
+    let array = getParam();
+    // 获取 url 参数
+    function getParam(){
+        // http://127.0.0.1:8080/online_oj/reviewDetail.html?id=1&usernsame=8
+        let param = location.search;
+        let qs = (param.length > 0 ? param.substring(1): '');
+
+        // 保存数据的对象
+        let array = [];
+
+        let items = (qs.length > 0 ? qs.split('&') : []);
+        // 将每一个添加到 array 中
+        for (item of items) {
+            let ob = item.split('=');
+            array[ob[0]] = ob[1];
+        }
+        return array;
+    }
+
+</script>
+
+<script>
+    let editor = editormd('editor', {
+            width: "100%",
+            //设定编辑器高度
+            height: "700px",
+            //编辑器初始化内容
+            markdown: "#记录题解",
+            //指定editor.md依赖的插件
+            path: "editor.md/lib/",
+            // 通过这个属性，来指定 editor.md 把编辑器中容放    到 textarea（多行文本框）中
+            saveHTMLToTextArea:true,
+            emoji: true,
+            lineNumbers:false,
+    });
+
+    function submit(){
+        let title = $('.head-input').val();
+        if($.trim(title) == ''){
+            alert('题目不可以为空!!!');
+            return;
+        }
+
+        let content = $('#editor textarea').val();
+        if($.trim(content) == ''){
+            alert('内容不可以为空!!!');
+            return;
+        }
+
+        let data = {
+            problemId: array['problemId'],
+            title: title,
+            content: content
+        };
+
+        $.ajax({
+            url: './submitsettle',
+            method: 'post',
+            contentType: 'application/json;charset=utf8',
+            data: JSON.stringify(data),
+
+            success: function(data, status){
+                if(data.error == 0){
+                    alert('发布成功');
+
+                    window.location.href = 'settlementDetail.html?id=' + array['problemId'];
+                } else {
+                    alert(data.reason);
+                }
+            }
+        });
+
+    }
+</script>
+
+</html>

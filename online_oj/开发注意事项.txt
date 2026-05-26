@@ -1,0 +1,36 @@
+1. 客户端 --- ajax --- 服务器
+服务器进行重定向(resp.sendRedirect())，ajax 不支持除了传递数据之外的其他操作，所以客户端无法收到重定向的信息
+服务器如果要进行重定向，在响应报头中添加自定义键值对(包括是否重定向，重定向的URL)，ajax将响应返回给客户端，在前端根据自定义的键值对，进行重定向
+2. ajax 的 success 和 error
+   1. 发现: 关于错误信息的返回
+   2. 解决: 关于错误信息的返回，最终决定自定义响应头传递错误信息
+   3. 收: 关于ajax，如果响应正文为空，或者是不符合 Content-Type，那么就是响应失败，对应前端的回调函数 error
+
+3. 前端获取URl参数，参考 https://juejin.cn/post/7082306920945549325
+                     https://blog.csdn.net/jbj6568839z/article/details/90414430
+
+4. 关于编码方式
+              1. 发现：出现错误信息，自定义响应头来放错误信息，发现传给前端的是 ？？？
+              2. 解决：后端错误信息使用 utf8 编码 URLEncoder.encode("输入格式有误"，"utf8")
+                   前端使用 utf8 解码, decodeURI(data.getResponseHead(""))
+              3. 收:
+                 https://www.cnblogs.com/nancyzhang/p/8094739.html#:~:text=%20%E6%80%BB%E7%BB%93%EF%BC%9A%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AB%AF%E7%9A%84AJAX%E5%AF%B9%E8%B1%A1%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E4%B8%BAUTF-8%2C%20%E8%A7%A3%E7%A0%81%E6%96%B9%E5%BC%8F%E9%BB%98%E8%AE%A4%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E4%B8%80%E8%87%B4%EF%BC%9B,%E8%80%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E9%BB%98%E8%AE%A4%E7%BC%96%E7%A0%81%E5%92%8C%E8%A7%A3%E7%A0%81%E6%96%B9%E5%BC%8F%E9%83%BD%E4%B8%BA%20ISO-8859-1%E3%80%82%20%E6%89%80%E4%BB%A5%E5%A6%82%E6%9E%9C%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AB%AF%E7%9A%84%E7%BC%96%E7%A0%81%E6%96%B9%E5%BC%8F%E5%92%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E8%A7%A3%E7%A0%81%E6%96%B9%E5%BC%8F%E4%B8%8D%E4%B8%80%E6%A0%B7%E4%BC%9A%E4%BA%A7%E7%94%9F%E4%B9%B1%E7%A0%81%E3%80%82
+                 encodeURI() decodeURI() 是前端编解码方法，默认使用 utf8
+                 URLEncoder.encode(字符串，字符集) [import java.net.URLEncoder;]
+                 URLDecoder.decode() [import java.net.URLDecoder;]
+                 后端编解码方法
+
+5. 关于 ajax 异步调用和同步调用
+              1. 发现: 前端展示 '展开评论时(1)' 时，发现 ajax 的响应不能改变函数中全局变量的值
+              2. 解决: 设置 ajax 同步调用
+              3. ajax异步调用(默认，async:true)，客户端不等待服务器响应返回，直接执行下一步操作；
+                 ajax同步调用(async:false)，客户端必须等待服务器响应返回后，才能执行下一步操作
+              https://blog.csdn.net/yz_software/article/details/8140617
+
+6. 前端url参数中包含 |{}[],% 等字符会报错
+              解决方法：修改 apache-tomcat-8.5.72\conf\server.xml文件中
+                      <Connector port="8080" protocol="HTTP/1.1"
+                                     connectionTimeout="20000"
+                                     redirectPort="8443"
+                      />中添加
+                      relaxedPathChars="|{}[],%" relaxedQueryChars="|{}[],%"

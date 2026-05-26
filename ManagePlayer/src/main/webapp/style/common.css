@@ -1,0 +1,145 @@
+/* 设置所有网页共有的样式属性 */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html, body {
+    /* 和父元素一样高，boby的父元素的html，html的父元素是浏览器窗口*/ 
+    height: 100%;
+    background-image: url(../image/背景图.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* 导航栏 */
+.nav {
+    height: 40px;
+    background-color: rgba(144, 158, 167, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* 中间占位的元素 */
+.spacer {
+    width: 70%;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* 导航栏中的logo */
+.nav img {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    margin-left: 15px;
+}
+
+/* 导航栏中的链接 */
+.nav a {
+    text-decoration: none;
+    color: white;
+    padding: 0 10px;
+}
+
+/* 导航栏中 “我的博客系统” */
+.nav .title {
+    color: white;
+    padding-left: 8px;
+}
+
+/* 版心 */
+.container {
+    display: flex;
+    height: calc(100% - 40px);
+    justify-content: center;
+    align-items: center;
+}
+
+/* 左侧区域 */
+.container .left {
+    height: 100%;
+    width: 156px;
+}
+
+/* 右侧区域 */
+.container .right {
+    /* 加一个属性，滚动条；防止元素移除 */
+    overflow: auto;
+    height: 100%;
+    width: 648px;
+    margin-left: 3px;    
+    border-radius: 8px;
+    background-color: rgba(238, 238, 238, 0.8); 
+}
+
+/* 用户信息 */
+.card {
+    width: 100%;
+    height: 425px;
+    border-radius: 8px;
+    background-color: rgba(238, 238, 238, 0.8);
+}
+
+/* 用户头像 */
+.card img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin: 20px 28px 0;
+}
+
+/* 用户姓名 */
+.card .name {
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    padding-top: 10px;
+}
+
+/* 用户的CSDN链接 */
+.card a {
+    /* 行内元素设置内外边距不起作用，需要转变为块级元素 */
+    display: block;
+
+    text-decoration: none;
+    font-size: 13px;
+    color: grey;
+    text-align: center;
+    padding-top: 14px;
+}
+
+/* 用户的文章 */
+.card .row {
+    display: flex;
+    justify-content: center;
+    padding-top: 14px;
+}
+
+.card span {
+   width: 30%;
+   text-align: center;
+}
+
+ .card .row a {
+     padding-top: 0;
+     font-size: 16px;
+     color: rgb(170, 97, 170);
+ }
+
+ .card div {
+     padding-bottom: 6px;
+ }
+
+ .card .introduce {
+    padding: 20px 10px 0 20px;
+    line-height: 24px;
+    
+}
+
+.card .introduce h4 {
+    text-align: center;
+    padding-bottom: 6px;
+}

@@ -1,0 +1,64 @@
+<!--这是个静态页面-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建球员</title>
+    <link rel="stylesheet" href="style/common.css">
+    <link rel="stylesheet" href="style/create.css">
+
+    <link rel="stylesheet" href="./editor.md/css/editormd.min.css">
+
+    <!-- jquery是第三方库 jquery之于JS如 spring之于Java -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+
+</head>
+<body>
+    <div class="nav">
+        <img src="image/NBA标志.jpg" title="NBA">
+        <span class="title">我的球员管理系统</span>
+        <span class="spacer">本网站不限于球员管理，用户可写随意日记、博客等，有问题可联系强仔，最终解释权归强仔所有</span>
+        <a href="player_list.html">主页</a>
+        <a href="player_create.html">添加球员</a>
+        <a href="loginout">注销</a>
+    </div>
+    <!-- 设置版心 -->
+    <div class="create-container">
+
+        <form action="player_edit" method="post" style="height: 100%;">
+            <div class="sent">
+                <input type="text" class="message" name="playerName">
+                <input type="submit" class="sent-writer" value="发布文章">
+            </div>
+    
+            <!-- 引入editor.md编辑器 -->
+            <div id="editor">
+                <!-- 设置一个隐藏的textarea -->
+                <textarea name="content" style="display: none;"></textarea>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        //初始化 editor.md编辑器
+        var editor = editormd("editor", {
+            //这里的尺寸必须在这里设置. 设置样式会被 editormd 自动覆盖掉. 
+            width: "100%",
+            //设定编辑器高度
+            height: "calc(100% - 40px)",
+            //编辑器初始化内容
+            markdown: "# 在这里记录一名球星",
+            //指定editor.md依赖的插件
+            path: "editor.md/lib/",
+            // 通过这个属性，来指定 editor.md 把编辑器中的内容放到 textarea（多行文本框）中
+            saveHTMLToTextArea:true
+        });
+    </script>
+    
+</body>
+</html>

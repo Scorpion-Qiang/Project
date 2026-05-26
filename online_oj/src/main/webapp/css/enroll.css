@@ -1,0 +1,134 @@
+/* 去除浏览器默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* 给整体的页面设置一个高度（与浏览器窗口一样大）*/
+    height: 100%;
+    /* 设置背景图 */
+    background-image: url(../image/plitback.jpg);
+    /* 设置背景图不平铺 */
+    background-repeat: no-repeat;
+    /* 设置背景图位置 */
+    background-position: center center;
+    /* 设置背景图大小 */
+    background-size: cover;
+}
+
+
+.enroll {
+    width: 440px;
+    height: 600px;
+    margin: 83px auto;
+    background-color: rgba(170, 167, 182, 0.8);
+    border-radius: 8px;
+}
+
+
+h2 {
+    text-align: center;
+    padding-top: 40px;
+}
+
+
+.username, .password, .passwordAgain, .photo, .introduce {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 25px 0;
+    font-weight: 600;
+}
+
+
+span {
+    line-height: 40px;
+}
+
+
+.introduce span {
+    line-height: 60px;
+}
+
+
+input {
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    /* 去除选中input后的边框 */
+    outline: none;
+
+    padding: 10px;
+}
+
+
+.photo input {
+    width: 204px;
+}
+
+
+textarea {
+    width: 195px;
+    height: 60px;
+    font-size: 15px;
+    border-radius: 8px;
+    outline: none;
+    /* 禁止拉伸 */
+    resize: none;
+
+    padding: 10px;
+    
+}
+
+.validatecode {
+    padding: 25px 25px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+}
+
+.validatecode a {
+    font-size: 6px;
+    line-height: 38px;
+    padding-left: 5px;
+
+}
+.validatecode input {
+    width: 60px;
+    height: 40px;
+}
+.validatecode .space {
+    width: 30px;
+}
+
+.validatecode img {
+    padding-left: 10px;
+}
+
+.result {
+    display: flex;
+    justify-content: center;
+    padding-left: 100px;
+}
+
+#submit {
+    height: 40px;
+    width: 100px;
+    font-weight: 600;
+    background-color: cornflowerblue;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+}
+#submit:active {
+    background-color: bisque;
+}
+
+#login {
+    font-size: 10px;
+    padding-left: 20px;
+    line-height: 62px;
+    
+}

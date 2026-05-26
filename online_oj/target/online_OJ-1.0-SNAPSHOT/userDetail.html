@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title></title>
+
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/userDetail.css">
+
+    <!-- 引入JQuery-->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <img alt="头像" src="./image/图标.jpg">
+        <span class="title">Online Judge</span>
+        <span class="spacer"></span>
+        <a href="userDetail.html">个人主页</a>
+        <a href="problemlist.html">题库</a>
+        <a href="reviewlist.html">讨论</a>
+    </div>
+
+    <div class="container">
+
+
+        <div class="update-password" style="display: none;">
+            <a class="quit" href="#" onclick="quit('password')">×</a>
+            <div>
+                <div>原密码: </div>
+                <input type="password" id="update-priorpassword">
+            </div>
+            <div>
+                <div>新密码: </div>
+                <input type="password" id="update-newpassword">
+            </div>
+
+            <div>
+                <div>再次输入新密码: </div>
+                <input type="password" id="update-againpassword">
+            </div>
+
+            <div>
+                <a href="#" class="update-save" onclick="updateSavePassword()">保存</a>
+            </div>
+        </div>
+
+
+        <div class="update-information" style="display: none;">
+            <a class="quit" href="#" onclick="quit('information')">×</a>
+            <div>
+                <div>用户名: </div>
+                <input type="text" id="update-username">
+            </div>
+            <div>
+                <div>个人介绍: </div>
+                <textarea id="update-introduce"></textarea>
+            </div>
+
+            <div>
+                <div>更换头像: </div>
+                <input type="file" id="update-myphoto">
+            </div>
+
+            <div>
+                <a href="#" class="update-save" onclick="updateSaveInformation()">保存</a>
+            </div>
+        </div>
+
+
+        <div class="display">
+            <img title="头像" src="" id="photo">
+            <div class="name">我在力扣卖枸杞</div>
+            <div class="operation">
+                <div>
+                    <a href="#" onclick="updateInformation()">修改个人信息</a>
+                </div>
+                <div>
+                    <a href="#" onclick="updatePassword()">修改密码</a>
+                </div>
+                <div>
+                    <a href="#" onclick="loginOut()">注销</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="my_container">
+            <div class="information">
+                <div class="introduce">
+                    <h3>个人简介</h3>
+                    <div class="my_introduce">
+                    
+                    </div>
+
+
+                </div>
+                <div class="problem">
+                    <div class="submit">
+                        <span>提交次数</span>
+                        <span id="submit"></span>
+                    </div>
+                    <div class="pass">
+                        <span>通过题目数</span>
+                        <span id="pass"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="achievement">
+                <div class="choice">
+                    <button onclick="getProblem()">最近通过</button>
+                    <button onclick="getReview()">发布讨论</button>
+                    <button onclick="getMyMethod()">发布题解</button>
+                </div>
+                <div class="content">
+
+                    <!-- 提交记录
+                    <button class="con_problem white">
+                        
+                        <div class="description">
+                            <span class="pro_id"></span>
+                            <span class="pro_title"></span>
+                        </div>
+                    
+                        <div class="pro_time"></div>
+                    </button>
+
+                    评论 
+                    <a class="con_review white">
+                        <div class="re_title"></div>
+                        
+                        <div class="re_time"></div>
+                    </a>
+
+
+                    题解
+                    <a class="con_method white">
+                        <div class="description">
+                            <span class="me_id"></span>
+                            <span class="me_title"></span>
+                            <span class="me_mytitle"></span>
+                        </div>
+                        <div class="me_time"></div>
+                    </a> -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- 获取URL中的参数 -->
+<script>
+
+    let array = getParam();
+    // 获取 url 参数
+    function getParam(){
+        // http://127.0.0.1:8080/online_oj/reviewDetail.html?id=1&usernsame=8
+        let param = location.search;
+        let qs = (param.length > 0 ? param.substring(1): '');
+
+        // 保存数据的对象
+        let array = [];
+
+        let items = (qs.length > 0 ? qs.split('&') : []);
+        // 将每一个添加到 array 中
+        for (item of items) {
+            let ob = item.split('=');
+            array[ob[0]] = ob[1];
+        }
+        return array;
+    }
+
+    if(array['username'] == null){
+        array['username'] = '我的主页'
+    }
+
+    $('head title').text(array['username'] + '-Online Judge');
+
+</script>
+
+<!-- 填充个人信息 -->
+<script>
+
+    // 填充个人信息部分
+    getUser();
+    function getUser(){
+        $.ajax({
+            url: './userdetail' + location.search,
+            method: 'get',
+            success: function(data, status, resp){
+                if(resp.getResponseHeader('REDIRECT') == 'true'){
+                    location.href = resp.getResponseHeader('SENDPATH');
+                }
+
+                if(resp.getResponseHeader('ERRORREASON') != null){
+                    alert(decodeURI(resp.getResponseHeader('ERRORREASON')));
+                }
+                
+                merge(data);
+            },
+        });
+    }
+
+    function merge(data){
+        let name = $('.name');
+        name.text(data.username);
+
+        let img = $('#photo');
+        img.attr({
+            'src': './image/' + data.photo
+        });
+
+        let my_introduce = $('.my_introduce');
+        if(data.introduce == null){
+            my_introduce.text('该用户很懒，什么也没留下...')
+            my_introduce.attr({
+                "style": "color: grey; fontSize:14px"
+            })
+        } else {
+            my_introduce.text(data.introduce);
+        }
+
+        
+        let submit = $('#submit');
+        submit.text(data.submit);
+
+        let pass = $('#pass');
+        pass.text(data.passproblemcount);
+    }
+
+
+
+    // 提交记录
+    getProblem();
+    function getProblem(){
+        $('.content').empty();
+        $.ajax({
+            url: "./useronerecord" + location.search,
+            method: "get",
+            success: function(data, status){
+                mergeProblem(data);
+            }
+        });
+    }
+
+    function mergeProblem(data){
+        let content = $('.content');
+        let book = true;
+
+        for (record of data) {
+
+            let con_problem = $('<a>');
+            con_problem.addClass("con_problem");
+
+            con_problem.attr({
+                'href': './recordDetail.html?id=' + record.id,
+                'target': '_blank'
+            })
+            if(book == true){
+                con_problem.addClass("white");
+            } else {
+                con_problem.addClass("grey");
+            }
+            book = !book;
+            
+
+            let description = $('<div>');
+            description.addClass('description');    
+
+            let pro_id = $('<span>');
+            pro_id.addClass('pro_id');
+            pro_id.text(record.problemId + '.');
+            description.append(pro_id);
+
+            let pro_title = $('<span>')
+            pro_title.addClass('pro_title');
+            pro_title.text(record.problemTitle);
+            description.append(pro_title);
+
+            con_problem.append(description);   
+
+            let pro_time = $('<div>');
+            pro_time.addClass('pro_time');
+            pro_time.text(record.time);
+            con_problem.append(pro_time);
+
+            content.append(con_problem);
+        }
+    }
+
+
+    // 评论
+    function getReview(){
+        $('.content').empty();
+        $.ajax({
+            url: './userreview' + location.search,
+            method: 'get',
+            success: function(data, status){
+                mergeReview(data);
+            }
+        });
+    }
+
+    function mergeReview(data){
+        let content = $('.content');
+        let book = true;
+        for (review of data) {
+            let con_review = $('<a>');
+            con_review.addClass('con_review');
+            con_review.attr({
+                'href': './reviewDetail.html?id=' + review.id,
+                'target': '_blank'
+            })
+
+            if(book == true){
+                con_review.addClass('white');
+            } else {
+                con_review.addClass('grey');
+            }
+            book = !book;
+
+            let re_title = $('<div>');
+            re_title.addClass('re_title');
+            re_title.text(review.title);
+            con_review.append(re_title);
+
+            let re_time = $('<div>');
+            re_time.addClass('re_time');
+            re_time.text(review.time);
+            con_review.append(re_time);
+
+
+            content.append(con_review);
+        }
+    }
+
+
+    // 题解
+    function getMyMethod(){
+        $('.content').empty();
+        $.ajax({
+            url: './usersettle',
+            method: 'get',
+            success: function(data, status){
+                mergeMethod(data);
+            }
+        });
+    }
+
+    function mergeMethod(data){
+        let content = $('.content');
+        let book = true;
+        for (let method of data) {
+
+            let con_method = $('<a>');
+            con_method.addClass('con_method');
+            con_method.attr({
+                'href': './settlementDetail.html?id=' + method.id,
+                'target': '_blank'
+            })
+            if(book == true){
+                con_method.addClass('white');
+            } else {
+                con_method.addClass('grey');
+            }
+            book = !book;
+
+            let description = $('<div>');
+            description.addClass('description');
+
+            let me_id = $('<span>');
+            me_id.addClass('me_id');
+            me_id.text(method.problemId + '.');
+            description.append(me_id);
+
+            let me_title = $('<span>');
+            me_title.addClass('me_title');
+            me_title.text(method.problemName + ' --- ');
+            description.append(me_title);
+
+            let me_mytitle = $('<span>');
+            me_mytitle.addClass('me_mytitle');
+            me_mytitle.text(method.title);
+            description.append(me_mytitle);
+
+            con_method.append(description);
+
+            let me_time = $('<div>');
+            me_time.addClass('me_time');
+            me_time.text(method.time);
+            con_method.append(me_time);
+
+            content.append(con_method);
+        }
+    }
+
+
+</script>
+
+<!-- quit() -->
+<script>
+    function quit(value){
+        $('.update-' + value).attr({
+            'style': 'display: none'
+        });
+    }
+</script>
+
+
+<!-- 修改个人信息 -->
+<script>
+    function updateInformation(){
+        $('.update-information').attr({
+            'style': 'display: block'
+        });
+        
+        let username = $('.name').text();
+        $('#update-username').val(username);
+        let introduce = $('.my_introduce').text();
+        if(introduce != '该用户很懒，什么也没留下...'){
+            $('#update-introduce').text(introduce);
+        }
+    }
+
+    function updateSaveInformation(){
+        let username = $('#update-username');
+        let introduce = $('#update-introduce');
+        let photo = $('#update-myphoto')[0].files[0];
+
+        if($.trim(username.val()) == ''){
+            alert('用户名不合法!!!');
+            username.focus();
+            return;
+        }
+
+        if(introduce.val().length > 50){
+            alert('个人简介不可超过50字!!!');
+            introduce.focus;
+            return;
+        }
+
+        let formdata = new FormData();
+        formdata.append('username', username.val());
+        formdata.append('introduce', introduce.val());
+        formdata.append('myfile', photo);
+
+        $.ajax({
+            url: './updateuserinformation',
+            method: 'post',
+            data: formdata,
+            // 告诉浏览器，不需要带任何的编码，Django后端会自动识别formdata对象
+            contentType: false,
+            // 告诉浏览器，不需要对数据进行任何处理，原封不动的发送给后端
+            processData: false,
+
+            success: function(data, status){
+                if(data.error == 0){
+                    alert('修改成功!!!');
+                    window.location.href = './userDetail.html?username=' + username.val();
+                } else {
+                    alert(data.reason);
+                }
+            }
+        })
+    }
+
+</script>
+
+<!-- 修改密码 -->
+<script>
+    function updatePassword(){
+        $('.update-password').attr({
+            'style': 'display: block'
+        });
+        $('#update-priorpassword').val('');
+    }
+
+    function updateSavePassword(){
+        let priorPassword = $('#update-priorpassword').val();
+        let newPassword = $('#update-newpassword').val();
+        let againPassword = $('#update-againpassword').val();
+
+        if($.trim(priorPassword) == ''){
+            alert('原密码不可以为空!!!');
+            $('#update-priorpassword').focus();
+            return;
+        }
+
+        if($.trim(newPassword) == ''){
+            alert('新密码不可以为空!!!');
+            $('#update-newpassword').focus();
+            return;
+        }
+
+        if(newPassword != againPassword){
+            alert('两次输入的密码不一致!!!');
+            $('#update-againPassword').focus();
+            return;
+        }
+
+        let data = {
+            'priorPassword': priorPassword,
+            'newPassword': newPassword,
+            'againPassword': againPassword
+        }
+
+        $.ajax({
+            url: './updateuserpassword',
+            method: 'post',
+            contentType: 'application/json;charset=utf8',
+            data: JSON.stringify(data),
+            success: function(data, status){
+                if(data.error == 0){
+                    quit('password');
+                } else {
+                    console.log("进来了?");
+                    alert(data.reason);
+                }
+            }
+        })
+
+    }
+</script>
+
+<!-- 注销 -->
+<script>
+    function loginOut(){
+        if(confirm('确定注销?')){
+            $.ajax({
+                url: './loginout',
+                method: 'get',
+                success: function(data, status, resp){   
+                    window.location.href = resp.getResponseHeader('SENDPATH');
+                }
+            });
+        }
+
+        
+    }
+</script>
+
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>讨论-Online Judge</title>
+
+    <link rel="icon" href="./image/图标.jpg">
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/reviewlist.css">
+
+    <link rel="stylesheet" href="./editor.md/css/editormd.min.css">
+    <!-- 引入JQuery-->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="editor.md/lib/marked.min.js"></script>
+    <script src="editor.md/lib/prettify.min.js"></script>
+    <script src="editor.md/editormd.js"></script>
+</head>
+<body>
+    <div class="nav">
+        <img alt="头像" src="./image/图标.jpg">
+        <span class="title">Online Judge</span>
+        <span class="spacer"></span>
+        <a href="userDetail.html">个人主页</a>
+        <a href="problemlist.html">题库</a>
+        <a href="reviewlist.html">讨论</a>
+    </div>
+    
+    <div class="container">
+        <!-- 搜索框 + 搜索按钮 -->
+        <div class="header">
+            <input type="text" id="query">
+            <button id="search" onclick="search()">搜索</button>
+            <button id="addreview" onclick="add()">添加评论</button>
+        </div>
+
+        <div id="loading" style="display: none">
+            loading...
+        </div>
+
+
+        <div class="describe">
+            <div class="review">
+                <div class="first">
+                    <img src="./image/图标.jpg" class="myphoto">
+                    <div class="re_title">如何通过六级呢六级呢</div>
+                </div>
+                <div class="time">2022-10-4-20:58</div>
+                <div class="content">这份学习笔记从微服务的发展由来开始讲解，同时也讲到了微服务的应用落地实践，再到微服务的发展、进阶过程，最后到微服务下一代的发展过程，每个章节总结的都非常详细、非常到位。看完之后只想说一句：不愧是谷歌架构师，属实牛逼！</div> 
+                <a href="#" class="detail">>></a>               
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popbox">
+        <div class="send">
+            <input class="send-title" type="text" >
+            <a class="submit" href="#" onclick="submit()">发布评论</a>
+            <a class="cancel" href="#" onclick="cancel()">取消</a>
+        </div>
+
+        <!-- 引入editor.md编辑器 -->
+        <div id="editor">
+            <!-- 设置一个隐藏的textarea -->
+            <textarea style="display: none;"></textarea>
+        </div>
+    </div>
+</body>
+
+<!-- 编辑评论列表页 -->
+<script>
+    //初始化 editor.md编辑器
+    var editor = editormd("editor", {
+        //这里的尺寸必须在这里设置. 设置样式会editormd 自覆盖掉. 
+        width: "100%",
+        //设定编辑器高度
+        height: "400px",
+        //编辑器初始化内容
+        markdown: "# 记录评论",
+        //指定editor.md依赖的插件
+        path: "editor.md/lib/",
+        // 通过这个属性，来指定 editor.md 把编辑器中容放到 textarea（多行文本框）中
+        saveHTMLToTextArea:true
+    });
+
+
+    getReview();
+    function getReview(){
+        $('.review').remove();
+        $.ajax({
+            url: './review',
+            method: 'get',
+            success: function(data, status, resp) {
+                if(resp.getResponseHeader('REDIRECT') == 'true'){
+                    location.href = resp.getResponseHeader('SENDPATH');
+                    return;
+                }
+
+                if(resp.getResponseHeader('ERRORREASON') != null){
+                    alert(decodeURI(resp.getResponseHeader('ERRORREASON')));
+                    return;
+                } 
+                mergeReview(data);
+            }
+        });
+    }
+
+    function mergeReview(data){
+        let describe = $('.describe');
+
+        for (comment of data) {
+
+            let review = $('<div>');
+            review.addClass('review');
+
+            let first = $('<div>');
+            first.addClass('first');
+
+            let img = $('<img>');
+            img.addClass('myphoto');
+            img.attr({'src': './image/' + comment.userphoto, 'title':comment.username});
+            first.append(img);
+
+            let title = $('<div>');
+            title.addClass('re_title');
+            title.text(comment.title);
+            first.append(title);
+
+            review.append(first);
+
+            let time = $('<div>');
+            time.addClass('time');
+            time.text(comment.time);
+            review.append(time);
+
+            let content = $('<div>');
+            content.addClass('content');
+            content.text(comment.content);
+            review.append(content);
+
+            let a = $('<a>');
+            a.addClass('detail');
+            a.attr({
+                'href': './reviewDetail.html?id=' + comment.id,
+                'target': '_blank'
+            });
+            a.text('>>');
+            review.append(a);
+
+            describe.append(review);
+        }
+    }
+
+    function add(){
+        $('.popbox').css({
+            'display': 'block'
+        })
+    }
+
+    function submit(){
+        let title = $('.send-title');
+        if($.trim(title.val()) == ''){
+            alert('题目不可以为空!!!');
+            return;
+        }
+
+        let text = $('#editor textarea');
+        console.log(text.val());
+        if($.trim(text.val()) == ''){
+            alert('内容不可以为空!!!');
+            return;
+        }
+
+        let data = {
+            title: title.val(),
+            content: text.val()
+        }
+
+        $.ajax({
+            url: './submitreview',
+            method: 'post',
+            contentType: 'application/json;charset=utf8',
+            data: JSON.stringify(data),
+            success: function(data, status){
+                $('.popbox').css({
+                    'display': 'none'
+                });
+                alert('提交成功!!!');
+                getReview();
+            }
+        })
+
+    }
+
+    function cancel() {
+        $('.popback').css({
+            'display': 'none'
+        })
+
+        $('.popbox').css({
+            'display': 'none'
+        })
+        getReview();
+    }
+
+    
+</script>
+
+<!-- 睡眠函数 -->
+<script>
+    function sleeping(n){
+        let start = new Date().getTime();
+        while(true){
+            if((new Date().getTime() - start) > n){
+                break;
+            }
+        }
+    }
+</script>
+
+<!-- 搜索函数 -->
+<script>
+    function search(){
+        let query = $('#query').val();
+        if($.trim(query) == ''){
+            alert('搜索内容不规范!!!');
+            $('#query').focus();
+            return;
+        }
+
+        $('#loading').attr({
+            'style': 'display: block'
+        });
+        
+        // 为什么用post方法，如果用get，将query放在QueryString中，有些符号会无法识别，比如 #
+        let data = {
+            'query': query
+        }
+
+        $.ajax({
+            url: './searcherreview',
+            method: 'post',
+            contentType: 'application/json;charset=utf8',
+            data: JSON.stringify(data),
+            success: function(data, status){
+                $('.describe').empty();
+
+                if(data.length == 0){
+                    let noResult = $('<div>');
+                    noResult.text('没有找到相应的搜索结果...');
+                    noResult.css({
+                        'font-size': '20px'
+                    });
+                    $('.describe').append(noResult);
+                } else {
+                    mergeReview(data);
+                }
+                sleeping(1000);
+                $('#loading').attr({
+                    'style': 'display: none'
+                });
+
+            }
+        });
+
+
+
+    }
+</script>
+
+
+</html>

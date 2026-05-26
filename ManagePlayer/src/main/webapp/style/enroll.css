@@ -1,0 +1,64 @@
+.nav .spacer {
+    width:80%;
+}
+
+.enroll {
+    height: 480px;
+    width: 400px;
+    background-color: rgba(238, 238, 238, 0.8);
+    border-radius: 8px;
+    padding: 36px 35px;
+}
+
+.enroll h4 {
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.enroll .user,
+.enroll .password,
+.enroll .verification_code,
+.enroll .photo,
+.enroll .introduce {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.enroll input {
+    width: 150px;
+    height: 35px;
+    border-radius: 8px;
+    border: none;
+
+    /* 选中时也去掉轮廓线 */
+    outline: none;
+}
+
+.enroll .user,
+.enroll .password,
+.enroll .verification_code {
+    margin-bottom: 6px;
+}
+
+.enroll .submit input {
+    margin-top: 20px;
+    width: 332px;
+    background-color: rgb(101, 151, 101);
+    color: white;
+}
+
+.enroll .submit input:active {
+    background-color: rgb(99,127,146);
+}
+
+.enroll .introduce .decribe {
+    height: 50px;
+    width: 150px;
+    border-radius: 8px;
+    border: none;
+    /* 选中时也去掉轮廓线 */
+    outline: none;
+    font-size: 20px;
+}
+

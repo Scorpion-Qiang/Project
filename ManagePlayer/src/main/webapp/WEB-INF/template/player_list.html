@@ -1,0 +1,65 @@
+<!--动态页面-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+<!--    此处 有个陷阱， 把 play_list.html 放到template目录下，移动的是本地文件的路径；
+浏览器访问的路径是 ManagePlayer/player_list.html（servlet程序），此处是以浏览器的路径（url）来进行相对的，和文件在磁盘上的路径关系不大-->
+    <link rel="stylesheet" href="style/common.css">
+    <link rel="stylesheet" href="style/list.css">
+</head>
+<body>
+    <div class="nav">
+        <img src="image/NBA标志.jpg" title="NBA">
+        <span class="title">我的球员管理系统</span>
+        <span class="spacer"></span>
+        <a href="player_list.html">主页</a>
+        <a href="player_create.html">添加球员</a>
+        <a href="loginout">注销</a>
+    </div>
+    <div class="container">
+        <div class="left">
+            <div class="card">
+                <img th:src="${team.photoPath}">
+                <div class="name" th:text="${team.teamName}"></div>
+                <a class="Myblog" href="https://blog.csdn.net/gjwloveforever?type=blog">我的CSDN链接</a>
+                <div class="row">
+                    <span>
+                        <a class="Myplayer" th:href="${'player_list.html?id='+ team.id}">我的球员</a>
+                    </span>
+                    <span>
+                        <a class="Myteam" th:href="${'team_list.html'}">球队用户</a>
+                    </span>
+                </div>
+                <div class="row">
+                    <span th:text="${team.playerCount}"></span>
+                    <span th:text="${teamCount}"></span>
+                </div>
+
+                <div class="introduce">
+                    <h4>个人简介</h4>
+                    <div th:text="${team.introduce}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="right">
+            <div class="content">
+                <div class="prompt">
+                    <h3 th:text="${isMyPlayers}"></h3>
+                </div>
+                <div class="player" th:each="player : ${players}">
+                    <h3 th:text="${player.playerName}"></h3>
+                    <div class="time" th:text="${player.postTime}"></div>
+                    <div class="introduce" th:text="${player.content}"></div>
+                    <div class="all">
+                        <a th:href="${'player_detail.html?id=' + player.id}">查看全文 &gt;</a>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</body>
+</html>

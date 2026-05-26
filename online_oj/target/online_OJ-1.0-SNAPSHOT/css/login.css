@@ -1,0 +1,86 @@
+.login {
+    width: 440px;
+    height: 450px;
+    margin: 83px auto;
+    background-color: rgba(170, 167, 182, 0.8);
+    border-radius: 8px;
+}
+
+h2 {
+    text-align: center;
+    padding-top: 40px;
+}
+
+.username, .password {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 25px 0;
+    font-weight: 600;
+}
+
+span {
+    line-height: 40px;
+}
+
+input {
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    /* 去除选中input后的边框 */
+    outline: none;
+
+    padding: 10px;
+}
+
+
+.validatecode {
+    padding: 40px 25px 0px;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+}
+
+.validatecode a {
+    font-size: 6px;
+    line-height: 38px;
+    padding-left: 5px;
+
+}
+.validatecode input {
+    width: 60px;
+    height: 40px;
+}
+.validatecode .space {
+    width: 30px;
+}
+
+.validatecode img {
+    padding-left: 10px;
+}
+
+.result {
+    display: flex;
+    justify-content: center;
+    padding-left: 100px;
+    padding-top: 40px;
+}
+
+#submit {
+    height: 40px;
+    width: 100px;
+    font-weight: 600;
+    background-color: cornflowerblue;
+    text-align: center;
+    border: none;
+    border-radius: 8px;
+}
+#submit:active {
+    background-color: bisque;
+}
+
+#login {
+    font-size: 10px;
+    padding-left: 20px;
+    line-height: 62px;
+}

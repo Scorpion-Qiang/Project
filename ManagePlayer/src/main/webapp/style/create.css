@@ -1,0 +1,40 @@
+.create-container {
+    height: calc(100% - 40px);
+    width: 900px;
+    margin: 0 auto;
+}
+
+.create-container .sent {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+}
+.create-container .sent .message {
+    height: 100%;
+    width: 796px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+.create-container .sent .sent-writer {
+    height: 100%;
+    width: 100px;
+    border-radius: 8px;
+    background-color: orange;
+    color: white;
+}
+
+.create-container .sent .sent-writer:active {
+    background-color: grey;
+}
+
+#editor {
+    /* 只设置父元素是不行的，子元素依然依照自己的属性  用opacity*/
+    /* background-color: rgba(255, 255, 255, 0.7); */
+    border-radius: 8px;
+    opacity: 0.7;
+
+}
+

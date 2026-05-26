@@ -1,0 +1,202 @@
+.container {
+    /* 设置宽度 */
+    width: 100%;
+    /* 设置高度 */
+    height: calc(100% - 40px);
+    /* 位置居中 */
+    margin: 0 auto;
+
+    /* 圆角矩形 */
+    border-radius: 8px;
+    /* 设置内边距，避免文字紧贴边框 */
+    padding: 25px; 
+
+    overflow: auto;
+}
+
+.header {
+    width: 60%;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.header input {
+    width: 40%;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    padding-left: 10px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+
+#search {
+    width: 10%;
+    height: 40px;
+    background-color: rgb(97, 97, 224);
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+
+    /* 去边框 */
+    border: none;
+}
+
+#addreview {
+    width: 10%;
+    height: 40px;
+    background-color: rgb(97, 97, 224);
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-left: 60px;
+
+    /* 去边框 */
+    border: none;
+}
+
+#search:active, #addreview:active {
+    border: 1px solid white;
+}
+
+.describe {
+    width: 60%;
+    height: 618px;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.review {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 15px 15px 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    width: 98%;
+}
+
+
+.first {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.myphoto {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.re_title {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.time {
+    font-size: 10px;
+    color: grey;
+    padding-top: 6px;
+}
+
+.content {
+    padding-top: 6px;
+    line-height: 30px;
+}
+
+.detail {
+    text-decoration: none;
+    color: grey;
+    margin-left: 380px;
+}
+
+.detail:active {
+    color: white;
+}
+
+.popbox {
+    display: none;
+    background-color: #FFFFFF;
+    z-index: 11;
+    width: 100%;
+    height: 300px;
+    position:fixed;
+    top: calc(100% - 300px);
+    right:0;
+    left:0;
+    bottom:0;
+    margin:auto;
+}
+
+.send {
+    padding: 5px 10px;
+    height: 45px;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.6);
+
+    display: flex;
+    justify-content: start;
+}
+
+.send-title {
+    width: 80%;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+
+    padding-left: 10px;
+}
+
+.submit, .cancel {
+    width: 6%;
+    height: 35px;
+    border-radius: 8px;
+    border: none;
+
+    text-align: center;
+    line-height: 35px;
+    margin-left: 5px;
+    text-decoration: none;
+
+}
+
+.submit {
+    color: white;
+    background-color: green;
+}
+
+.cancel {
+    color: white;
+    background-color: rgba(128, 128, 128);
+}
+
+
+.submit:active, .cancel:active{
+    border: 1px solid white;
+}
+
+#editor {
+    /* 只设置父元素是不行的，子元素依然依照自己的属性  用opacity*/
+    opacity: 0.7;
+}
+
+#loading {
+    width: 59%;
+    height: calc(100% - 40px);
+    position:fixed;
+    background-color: rgba(255,255,255,0.6);
+    top:17%;
+    left: 19.5%;
+    
+    z-index:99999;
+
+    font-size: 20px;
+    color: grey;
+    text-align: center;
+    line-height: 713px;
+}
+
